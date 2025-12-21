@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flower Garden — A Botanical Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+</head>
+<body>    <!-- Always visible money counter -->
+    <div id="money-corner" class="money-corner">
+        <span class="money-icon">💰</span>
+        <span id="money-display">$100</span>
+    </div>
+        <div class="game-container">
+        <header>
+            <h1>My Flower Garden</h1>
+            <p style="font-style: italic; color: #8b7355; margin-bottom: 10px; font-family: 'EB Garamond', serif;">~ A Botanical Journal, Est. 1847 ~</p>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-label">Treasury:</span>
+                    <span id="money">$100</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Week:</span>
+                    <span id="week">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Garden Plot:</span>
+                    <span id="garden-size">4×4</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-panels">
+                <!-- Left Panel: Garden Grid -->
+                <section class="panel garden-panel">
+                    <h2>The Garden</h2>
+                    <div class="garden-view-toggle">
+                        <button id="grid-view-btn" class="view-btn active">Plot View</button>
+                        <button id="visual-view-btn" class="view-btn">Garden View</button>
+                    </div>
+                    
+                    <!-- Grid View -->
+                    <div id="grid-view" class="garden-view">
+                        <button id="open-seed-catalogue-btn" class="action-btn seed-catalogue-btn">📖 Seed Catalogue</button>
+                        <div id="garden-grid" class="garden-grid"></div>
+                    </div>
+                    
+                    <!-- Visual Garden View -->
+                    <div id="visual-view" class="garden-view hidden">
+                        <div class="visual-garden" id="visual-garden-container">
+                            <div class="garden-sky" id="garden-sky">
+                                <div class="sun" id="garden-sun"></div>
+                                <div class="cloud cloud-1"></div>
+                                <div class="cloud cloud-2"></div>
+                                <div class="cloud cloud-3"></div>
+                                <div class="weather-effects" id="weather-effects"></div>
+                            </div>
+                            <div class="garden-scene">
+                                <div class="garden-back-row"></div>
+                                <div class="garden-mid-row"></div>
+                                <div class="garden-front-row"></div>
+                                <div id="visual-plants" class="visual-plants"></div>
+                            </div>
+                            <div class="garden-ground">
+                                <div class="soil-layer"></div>
+                                <div class="grass-layer"></div>
+                                <div class="fence"></div>
+                                <div class="path"></div>
+                            </div>
+                            <div class="garden-decorations">
+                                <div class="butterfly butterfly-1">🦋</div>
+                                <div class="butterfly butterfly-2">🦋</div>
+                                <div class="bee">🐝</div>
+                                <div class="bird bird-1">🐦</div>
+                        <div class="visual-garden-info">
+                            <p class="hint">Click on plants to water or harvest them</p>
+                        </div>
+                    </div>
+                    
+                    <div class="garden-actions">
+                        <button id="water-all-btn" class="action-btn">Water All ($5)</button>
+                        <button id="next-day-btn" class="action-btn primary">Advance Day</button>
+                    </div>
+                </section>
+
+<!-- Center Panel: Inventory & Market -->
+                <section class="panel shop-panel">
+                    <h2>Harvested Specimens</h2>
+                    <div id="inventory" class="inventory"></div>
+                    
+                    <h2>Botanical Herbarium</h2>
+                    <p class="hint">Illustrations collected from cultivated specimens</p>
+                    <div id="herbarium" class="herbarium"></div>
+                            <div id="current-bouquet" class="current-bouquet"></div>
+                            <div class="bouquet-value">
+                                <span>Estimated Value: </span><span id="bouquet-value">$0</span>
+                            </div>
+                            <button id="create-bouquet-btn" class="action-btn">Complete Arrangement</button>
+                        </div>
+                    </div>
+
+                    <h2>Weekly Market</h2>
+                    <div class="market-section">
+                        <div class="market-demand">
+                            <h3>Current Demand:</h3>
+                            <div id="market-demand"></div>
+                        </div>
+                        <div id="bouquets-for-sale" class="bouquets-for-sale"></div>
+                        <button id="end-week-btn" class="action-btn warning">Conclude Week & Sell</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+<!-- Flower Shop Page (full page view) -->
+        <div id="flower-shop-page" class="page-view hidden">
+            <div class="page-header">
+                <button id="close-flower-shop" class="return-button">← Return to Garden</button>
+                <h1>The Arrangement Studio</h1>
+            </div>
+            <div class="flower-shop-page-content">
+                <div class="shop-main-layout">
+                    <!-- Row 1: Flowers + Canvas -->
+                    <div class="shop-section flowers-section">
+                        <h3>Available Specimens</h3>
+                        <div id="shop-available-flowers" class="shop-flower-scroll"></div>
+                    </div>
+                    
+                    <div class="shop-section canvas-section">
+                        <div id="arrangement-canvas" class="arrangement-canvas-compact">
+                            <!-- Victorian table surface -->
+                            <div class="arrangement-table">
+                                <div class="table-edge"></div>
+                            </div>
+                            <!-- Elegant Victorian Crystal Vase -->
+                            <svg class="vase-svg" viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="crystalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f0f8ff;stop-opacity:0.9" />
+                                        <stop offset="40%" style="stop-color:#e6f2ff;stop-opacity:0.85" />
+                                        <stop offset="100%" style="stop-color:#d4e8f7;stop-opacity:0.9" />
+                                    </linearGradient>
+                                    <linearGradient id="crystalShine" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgba(255,255,255,0)" />
+                                        <stop offset="40%" style="stop-color:rgba(255,255,255,0.8)" />
+                                        <stop offset="60%" style="stop-color:rgba(255,255,255,0.8)" />
+                                        <stop offset="100%" style="stop-color:rgba(255,255,255,0)" />
+                                    </linearGradient>
+                                    <radialGradient id="crystalReflection">
+                                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.6" />
+                                        <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+                                    </radialGradient>
+                                    <filter id="glassBlur">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" />
+                                    </filter>
+                                </defs>
+                                
+                                <!-- Main crystal body with elegant curves -->
+                                <path d="M 40 35 Q 35 50 38 70 Q 40 90 42 110 L 42 140 Q 42 148 50 150 L 70 150 Q 78 148 78 140 L 78 110 Q 80 90 82 70 Q 85 50 80 35 Q 77 25 60 23 Q 43 25 40 35 Z" 
+                                      fill="url(#crystalGrad)" 
+                                      stroke="#b0c4de" 
+                                      stroke-width="1.5"
+                                      opacity="0.95"/>
+                                
+                                <!-- Rim with cut glass effect -->
+                                <ellipse cx="60" cy="33" rx="21" ry="8" fill="#e6f2ff" stroke="#b0c4de" stroke-width="1.5" opacity="0.9"/>
+                                <ellipse cx="60" cy="33" rx="18" ry="6" fill="url(#crystalReflection)"/>
+                                <path d="M 39 33 Q 60 31 81 33" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.5"/>
+                                
+                                <!-- Base with pedestal -->
+                                <ellipse cx="60" cy="150" rx="22" ry="6" fill="#d4e8f7" stroke="#b0c4de" stroke-width="1.5"/>
+                                <ellipse cx="60" cy="150" rx="18" ry="4" fill="url(#crystalReflection)"/>
+                                
+                                <!-- Crystal facets for sparkle -->
+                                <path d="M 45 60 L 47 80 L 45 100" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.4"/>
+                                <path d="M 75 60 L 73 80 L 75 100" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.4"/>
+                                
+                                <!-- Main highlight shine -->
+                                <ellipse cx="47" cy="75" rx="10" ry="50" fill="url(#crystalShine)" opacity="0.7"/>
+                                
+                                <!-- Cut glass decorative band -->
+                                <g opacity="0.5">
+                                    <line x1="40" y1="95" x2="80" y2="95" stroke="#b0c4de" stroke-width="0.5"/>
+                                    <line x1="42" y1="100" x2="78" y2="100" stroke="#b0c4de" stroke-width="0.5"/>
+                                    <circle cx="50" cy="97.5" r="2" fill="#ffffff" opacity="0.3"/>
+                                    <circle cx="60" cy="97.5" r="2" fill="#ffffff" opacity="0.3"/>
+                                    <circle cx="70" cy="97.5" r="2" fill="#ffffff" opacity="0.3"/>
+                                </g>
+                                
+                                <!-- Bottom reflection -->
+                                <ellipse cx="60" cy="135" rx="15" ry="8" fill="url(#crystalReflection)" opacity="0.3"/>
+                            </svg>
+                            <div id="arrangement-flowers" class="arrangement-flowers"></div>
+                        </div>
+                        <div class="victorian-controls">
+                            <div class="control-panel left-panel">
+                                <div class="control-knob" id="copy-flower-btn" title="Duplicate Specimen">
+                                    <div class="knob-dial"></div>
+                                    <span class="knob-label">Copy</span>
+                                </div>
+                                <div class="control-knob" id="set-straight-btn" title="Align Vertical">
+                                    <div class="knob-dial straighten"></div>
+                                    <span class="knob-label">Straighten</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-panel center-panel">
+                                <div class="rotation-control-group">
+                                    <div class="control-knob rotate-left" id="rotate-counter-btn" title="Turn Counter-Clockwise">
+                                        <div class="knob-dial"></div>
+                                        <span class="knob-label">Turn ↶</span>
+                                    </div>
+                                    <div class="sensitivity-dial-container">
+                                        <div class="sensitivity-dial" id="sensitivity-dial">
+                                            <div class="dial-indicator"></div>
+                                            <div class="dial-notch n1"></div>
+                                            <div class="dial-notch n2"></div>
+                                            <div class="dial-notch n3"></div>
+                                            <div class="dial-notch n4"></div>
+                                        </div>
+                                        <span class="dial-label">Sensitivity</span>
+                                        <span class="dial-value" id="sensitivity-value">3°</span>
+                                    </div>
+                                    <div class="control-knob rotate-right" id="rotate-clockwise-btn" title="Turn Clockwise">
+                                        <div class="knob-dial"></div>
+                                        <span class="knob-label">Turn ↷</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-panel right-panel">
+                                <div class="control-knob" id="size-up" title="Enlarge">
+                                    <div class="knob-dial size-up"></div>
+                                    <span class="knob-label">Larger</span>
+                                </div>
+                                <div class="control-knob" id="size-down" title="Reduce">
+                                    <div class="knob-dial size-down"></div>
+                                    <span class="knob-label">Smaller</span>
+                                </div>
+                                <div class="control-knob clear-knob" id="clear-arrangement" title="Clear Canvas">
+                                    <div class="knob-dial"></div>
+                                    <span class="knob-label">Clear All</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2: Scores + Presentation -->
+                    <div class="shop-section scores-section">
+                        <div class="score-row">
+                            <span class="score-label">Aesthetic:</span>
+                            <div class="score-bar-compact"><div id="aesthetic-score" class="score-fill aesthetic"></div></div>
+                        </div>
+                        <div class="score-row">
+                            <span class="score-label">Fashion:</span>
+                            <div class="score-bar-compact"><div id="trend-score" class="score-fill trend"></div></div>
+                        </div>
+                        <div class="score-row">
+                            <span class="score-label">Harmony:</span>
+                            <div class="score-bar-compact"><div id="harmony-score" class="score-fill harmony"></div></div>
+                        </div>
+                        <div class="total-value-row">
+                            <strong>Value: <span id="arrangement-value">$0</span></strong>
+                        </div>
+                    </div>
+                    
+                    <div class="shop-section presentation-section">
+                        <div class="presentation-row">
+                            <label>Paper:</label>
+                            <div class="wrapper-options-inline">
+                                <button class="wrapper-option selected" data-wrapper="classic">Classic</button>
+                                <button class="wrapper-option" data-wrapper="elegant">Elegant</button>
+                                <button class="wrapper-option" data-wrapper="rustic">Rustic</button>
+                                <button class="wrapper-option" data-wrapper="luxury">Luxury</button>
+                            </div>
+                        </div>
+                        <div class="presentation-row">
+                            <label>Ribbon:</label>
+                            <div class="ribbon-options">
+                                <div class="ribbon-option selected" data-color="#8b4557" style="background: #8b4557;"></div>
+                                <div class="ribbon-option" data-color="#704f38" style="background: #704f38;"></div>
+                                <div class="ribbon-option" data-color="#4a5d3a" style="background: #4a5d3a;"></div>
+                                <div class="ribbon-option" data-color="#b8956e" style="background: #b8956e;"></div>
+                            </div>
+                        </div>
+                        <button id="create-shop-bouquet" class="primary-button">Complete & List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Specimen Notebook Modal -->
+        <div id="specimen-notebook-modal" class="modal hidden">
+            <div class="modal-content notebook-modal">
+                <span class="close" id="close-specimen-notebook">&times;</span>
+                <h2> The Botanical Specimen Notebook</h2>
+                <p class="hint">A complete record of all species cultivated in your garden</p>
+                <div id="specimen-list" class="specimen-list"></div>
+                <div class="notebook-footer">
+                    <button id="close-specimen-btn" class="return-button"> Return to Garden</button>
+                </div>
+            </div>
+        </div>        <!-- Upgrade Modal -->
+            </div>
+        </div>
+
+        <!-- Upgrade Modal -->
+        <div id="upgrade-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>🔧 Upgrades</h2>
+                <div id="upgrades-list" class="upgrades-list"></div>
+                <button id="close-upgrades" class="action-btn">Close</button>
+            </div>
+        </div>
+
+        <!-- Footer with upgrade button -->
+        <footer>
+            <button id="flower-shop-btn" class="action-btn shop-btn">Enter the Flower Shoppe</button>
+            <button id="specimen-notebook-btn" class="action-btn">Specimen Notebook</button>
+            <button id="upgrades-btn" class="action-btn">Improvements</button>
+            <button id="help-btn" class="action-btn">Instructions</button>
+        </footer>
+
+        <!-- Help Modal -->
+        <div id="help-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Instructions for the Gardener</h2>
+                <div class="help-content">
+                    <h3>§ Planting</h3>
+                    <p>Select a seed variety from the catalogue, then choose an empty plot in your garden to sow it.</p>
+                    
+                    <h3>§ Cultivation</h3>
+                    <p>Plants require regular watering. Click upon a plant to water it individually, or employ "Water All" for convenience. Advance time with "Advance Day".</p>
+                    
+                    <h3>§ Harvesting</h3>
+                    <p>When a plant reaches maturity (indicated by its full bloom), click to harvest. Specimens are placed in your collection.</p>
+                    
+                    <h3>§ Arrangements</h3>
+                    <p>Select flowers from your collection to compose bouquets. Different combinations yield different valuations.</p>
+                    
+                    <h3>§ The Market</h3>
+                    <p>Each week brings different demands. Sell arrangements that match current fashions for premium prices. Conclude the week to sell all prepared bouquets.</p>
+                    
+                    <h3>§ Improvements</h3>
+                    <p>Save your earnings to purchase improvements: larger gardens, exotic seeds, and superior tools.</p>
+                </div>
+                <button id="close-help" class="action-btn">I Understand</button>
+            </div>
+        </div>
+
+        <!-- Notification area -->
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    
+    <!-- Seed Catalogue Modal -->
+    <div id="seed-catalogue-modal" class="modal-overlay hidden">
+        <div class="modal-content seed-catalogue-modal">
+            <div class="modal-header">
+                <h2>📖 Seed Catalogue</h2>
+                <button id="close-seed-catalogue-btn" class="modal-close">×</button>
+            </div>
+            <p class="hint">Select a seed below, then click an empty plot in your garden to plant it</p>
+            <div id="seed-shop" class="seed-shop modal-seed-shop"></div>
+        </div>
+    </div>
+
+    <script src="botanical-illustrations.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

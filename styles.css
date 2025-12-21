@@ -562,7 +562,7 @@ footer, .main-footer {
 }
 
 /* Notifications */
-.notifications {
+.notifications, .notification-container {
   position: fixed;
   top: 1rem;
   right: 1rem;
@@ -570,6 +570,7 @@ footer, .main-footer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  pointer-events: none;
 }
 
 .notification {
@@ -580,6 +581,10 @@ footer, .main-footer {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   animation: slideIn 0.3s ease-out;
   min-width: 250px;
+  max-width: 400px;
+  pointer-events: auto;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .notification.success {
@@ -735,7 +740,31 @@ footer, .main-footer {
 }
 
 .garden-ground {
-  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, #8b7355 0%, #6b5344 100%);
+  z-index: 1;
+}
+
+.soil-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, #5a4534 0%, #4a3524 100%);
+}
+
+.grass-layer {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, #7cb342 0%, #558b2f 100%);
 }
 
 .fence {
@@ -747,9 +776,11 @@ footer, .main-footer {
 }
 
 .visual-plants {
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: 100%;
+  bottom: 80px;
+  height: calc(100% - 80px);
+  z-index: 5;
 }
 
 .visual-plant {
@@ -760,6 +791,7 @@ footer, .main-footer {
   filter: sepia(0.15) contrast(1.05);
   text-shadow: 1px 1px 2px rgba(90,74,58,0.2);
   transform: translateX(-50%);
+  bottom: 0;
 }
 
 .visual-plant:hover {

@@ -351,23 +351,30 @@ function renderVisualGarden() {
     const col = idx % GameState.gardenSize;
     const size = GameState.gardenSize;
     
-    // Calculate position within the soil row with slight random offset for natural look
+    // Calculate position within the garden with slight random offset for natural look
     const colWidth = 100 / size;
-    const randomOffset = (idx % 3 - 1) * 2; // Small offset: -2, 0, or 2
+    const randomOffset = (idx % 3 - 1) * 1.5; // Small offset: -1.5, 0, or 1.5
     
     const visualPlant = document.createElement('div');
     visualPlant.className = 'visual-plant botanical-plant';
     visualPlant.style.left = `${col * colWidth + colWidth / 2 + randomOffset}%`;
-    visualPlant.style.bottom = `${row * 60 + 10}px`;
     
-    // Scale flowers based on growth - much larger at full size
-    const minSize = 40;
-    const maxSize = 90;
+    // Position plants in rows from bottom, with back rows higher
+    const rowHeight = 40; // pixels per row
+    const baseOffset = 10; // base offset from bottom
+    visualPlant.style.bottom = `${baseOffset + (size - 1 - row) * rowHeight}px`;
+    
+    // Scale flowers based on growth - larger at full size
+    const minSize = 35;
+    const maxSize = 75;
     const flowerSize = minSize + (growthPercent * (maxSize - minSize));
     visualPlant.style.width = `${flowerSize}px`;
     visualPlant.style.height = `${flowerSize * 1.2}px`;
     visualPlant.style.opacity = `${0.5 + (growthPercent * 0.5)}`;
-    visualPlant.title = `${plant.common}\n(${plant.name})`;
+    visualPlant.title = `${plant.common}\n(${plant.name})\nClick to ${plant.stage >= plant.growth ? 'harvest' : 'water ($1)'}`;
+    
+    // Z-index based on row (back rows have lower z-index)
+    visualPlant.style.zIndex = row + 1;
     
     // Show full color botanical illustration for mature plants
     if (plant.stage >= plant.growth) {
@@ -527,6 +534,8 @@ function renderMarketDemand() {
 
 function renderBouquetsForSale() {
   const container = document.getElementById('bouquets-for-sale');
+  if (!container) return; // Guard against missing element
+  
   container.innerHTML = '';
   
   if (GameState.bouquets.length === 0) {
@@ -538,7 +547,7 @@ function renderBouquetsForSale() {
     const card = document.createElement('div');
     card.className = 'bouquet-card';
     card.innerHTML = `
-      <div class="bouquet-flowers">${bouquet.flowers.map(f => f.emoji).join(' ')}</div>
+      <div class="bouquet-flowers">${bouquet.flowers.map(f => f.emoji || '🌸').join(' ')}</div>
       <div class="bouquet-value">Value: $${bouquet.value}</div>
     `;
     container.appendChild(card);
@@ -547,11 +556,14 @@ function renderBouquetsForSale() {
 
 function renderCurrentBouquet() {
   const container = document.getElementById('current-bouquet');
+  if (!container) return; // Guard against missing element
+  
   container.innerHTML = '';
   
   if (GameState.currentBouquet.length === 0) {
     container.innerHTML = '<p class="hint">Select flowers from inventory</p>';
-    document.getElementById('bouquet-value').textContent = '$0';
+    const bouquetValue = document.getElementById('bouquet-value');
+    if (bouquetValue) bouquetValue.textContent = '$0';
     return;
   }
   
@@ -1325,13 +1337,22 @@ function switchView(view) {
 // ========== NOTIFICATIONS ==========
 function showNotification(message, type = 'info') {
   const container = document.getElementById('notifications');
+  if (!container) {
+    console.log(`[${type.toUpperCase()}] ${message}`);
+    return;
+  }
+  
   const notif = document.createElement('div');
   notif.className = `notification ${type}`;
   notif.textContent = message;
   container.appendChild(notif);
   
+  // Force reflow to ensure animation plays
+  notif.offsetHeight;
+  
   setTimeout(() => {
-    notif.style.animation = 'slideOut 0.3s ease-in';
+    notif.style.opacity = '0';
+    notif.style.transform = 'translateX(100%)';
     setTimeout(() => notif.remove(), 300);
   }, 3000);
 }

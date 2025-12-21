@@ -173,24 +173,52 @@ A beautiful HTML5 botanical garden simulation featuring 58 rare flower species, 
 - LocalStorage save system (auto-saves progress)
 - Responsive design for various screen sizes
 
+## 📁 Project Structure
+
+```
+My Flower Garden/
+├── index.html              # Main HTML file
+├── game.js                 # Main game logic (monolithic, browser-ready)
+├── botanical-illustrations.js  # SVG flower illustrations
+├── styles.css              # Victorian styling
+├── README.md               # This file
+├── src/                    # ES6 Module structure (for build systems)
+│   ├── main.js             # Entry point with imports
+│   ├── data/
+│   │   ├── flowers.js      # FLOWER_TYPES data
+│   │   └── upgrades.js     # UPGRADES data
+│   └── modules/
+│       ├── state.js        # GameState management
+│       ├── render.js       # All rendering functions
+│       ├── garden.js       # Planting, watering, harvesting
+│       ├── market.js       # Bouquets and sales
+│       ├── shop.js         # Flower shop arrangement
+│       ├── upgrades.js     # Upgrades system
+│       ├── weather.js      # Weather cycle
+│       ├── notifications.js # User feedback
+│       ├── notebook.js     # Specimen encyclopedia
+│       └── ui.js           # UI helpers and modals
+└── styles/
+    └── main.css            # Alternative CSS location
+```
+
+### Module Descriptions
+
+| Module | Purpose |
+|--------|---------|
+| `state.js` | Central GameState object, money management |
+| `render.js` | All UI rendering (garden, inventory, shop) |
+| `garden.js` | Plant, water, harvest, advance day logic |
+| `market.js` | Bouquet creation, market demand, week sales |
+| `shop.js` | Flower shop arrangement studio |
+| `upgrades.js` | Purchase upgrades, unlock seeds |
+| `weather.js` | Weather cycle animation |
+| `notifications.js` | Toast notifications |
+| `notebook.js` | Specimen encyclopedia |
+| `ui.js` | Modal controls, view switching |
+
+> **Note**: The `src/` folder contains ES6 modules for developers who want to use a build system (webpack, Vite, etc.). The main `game.js` file works directly in browsers without any build step.
+
 ---
 
 **Enjoy your Victorian botanical garden! 🌺🦋**
-- **Click ready flower**: Harvest
-- **Arrangement Studio**: Drag flowers, rotate, resize, clear
-- **View Toggle**: Switch between grid and visual garden
-- **End Week**: Advance time and refresh market demand
-
-## Technical Details
-- Pure vanilla JavaScript (no frameworks)
-- CSS Grid and Flexbox layouts
-- Modular state management via GameState object
-- Efficient rendering with minimal DOM manipulation
-- Responsive design optimized for 1200px+ screens
-
-## Future Enhancements
-- Save/load system with localStorage
-- Seasonal events and rare flower appearances
-- Achievement system
-- Gallery/album for collected species
-- Sound effects and ambient music

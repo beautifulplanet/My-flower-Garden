@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <div id="test-output"></div>
+    <script src="game.js"></script>
+    <script src="botanical-illustrations.js"></script>
+    <script>
+        const output = document.getElementById('test-output');
+        output.innerHTML = `
+            <h3>Debug Check:</h3>
+            <p>FLOWER_TYPES defined: ${typeof FLOWER_TYPES !== 'undefined'}</p>
+            <p>FLOWER_TYPES length: ${FLOWER_TYPES ? FLOWER_TYPES.length : 'N/A'}</p>
+            <p>getBotanicalIllustration defined: ${typeof getBotanicalIllustration !== 'undefined'}</p>
+            <p>GameState defined: ${typeof GameState !== 'undefined'}</p>
+            <p>Test flower: ${FLOWER_TYPES ? FLOWER_TYPES[0].common : 'N/A'}</p>
+            <p>Get illustration: ${typeof getBotanicalIllustration === 'function' ? 'YES' : 'NO'}</p>
+        `;
+        
+        if (typeof getBotanicalIllustration === 'function' && FLOWER_TYPES) {
+            try {
+                const svg = getBotanicalIllustration('dandelion');
+                output.innerHTML += `<h3>Sample SVG (first 200 chars):</h3><pre>${svg.substring(0, 200)}...</pre>`;
+            } catch(e) {
+                output.innerHTML += `<h3>Error: ${e.message}</h3>`;
+            }
+        }
+    </script>
+</body>
+</html>

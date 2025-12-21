@@ -1,0 +1,2860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flower Garden — A Botanical Journal</title>
+    <style>
+/* styles.css - Victorian botanical journal theme */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: linear-gradient(135deg, #f4f1e4 0%, #e8dcc8 100%);
+  font-family: 'EB Garamond', 'Crimson Text', serif;
+  color: #4a3b2c;
+  min-height: 100vh;
+  padding: 1rem;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.game-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #fff9f0;
+  border: 3px solid #bfa77a;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(60,40,20,0.15);
+  padding: 2rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e8dcc8;
+  padding-bottom: 1rem;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+  color: #5a4a3a;
+  margin-bottom: 0.5rem;
+}
+
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 1rem;
+}
+
+.stat {
+  font-size: 1.1rem;
+}
+
+.stat-label {
+  font-weight: bold;
+  color: #8b7355;
+  margin-right: 0.5rem;
+}
+
+.game-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.garden-panel {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.panel {
+  background: #f8f5e9;
+  border: 2px solid #e8dcc8;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(60,40,20,0.08);
+}
+
+.panel h2 {
+  font-family: 'Playfair Display', serif;
+  color: #5a4a3a;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e8dcc8;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.panel h3 {
+  color: #6a5a4a;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.hint {
+  font-style: italic;
+  color: #8b7355;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Garden Grid */
+.garden-view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.view-btn {
+  background: #e8dcc8;
+  color: #5a4a3a;
+  border: 2px solid #bfa77a;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.view-btn.active {
+  background: #bfa77a;
+  color: white;
+}
+
+.garden-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  grid-gap: 12px;
+  margin: 1rem auto;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.plot {
+  width: 80px;
+  height: 80px;
+  background: #f4e9d8;
+  border: 2px solid #bfa77a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 2.5rem;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.plant-emoji {
+  font-size: 2.5rem;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.plot:hover {
+  background: #ebe0cf;
+  transform: scale(1.05);
+}
+
+.plot.ready {
+  background: #d4f4dd;
+  box-shadow: 0 0 8px rgba(76,175,80,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.garden-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Seed Shop */
+.seed-shop {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.seed-card {
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.seed-card:hover {
+  background: #f4f1e4;
+  border-color: #bfa77a;
+  transform: translateY(-2px);
+}
+
+.seed-card.selected {
+  background: #e8f5e9;
+  border-color: #4caf50;
+  border-width: 3px;
+}
+
+.seed-emoji {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.seed-name {
+  font-weight: bold;
+  color: #5a4a3a;
+  margin-bottom: 0.2rem;
+}
+
+.seed-cost {
+  color: #8b7355;
+  font-weight: bold;
+}
+
+.seed-info {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* Inventory */
+.inventory {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.inventory-item {
+  background: white;
+  border: 1px solid #e8dcc8;
+  border-radius: 6px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.inventory-item:hover {
+  background: #f4f1e4;
+  transform: translateX(4px);
+}
+
+.inv-emoji {
+  font-size: 1.5rem;
+}
+
+.inv-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.inv-count {
+  color: #8b7355;
+}
+
+/* Bouquet Builder */
+.bouquet-builder {
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.current-bouquet {
+  min-height: 80px;
+  background: #f8f5e9;
+  border: 2px dashed #bfa77a;
+  border-radius: 6px;
+  padding: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+
+.bouquet-flower {
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.bouquet-flower:hover {
+  background: #ffe0e0;
+  transform: rotate(-10deg);
+}
+
+.bouquet-value {
+  text-align: right;
+  font-weight: bold;
+  color: #4caf50;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+/* Market */
+.market-demand {
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.demand-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.demand-value {
+  font-weight: bold;
+}
+
+.bouquets-for-sale {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.bouquet-card {
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bouquet-flowers {
+  font-size: 1.5rem;
+}
+
+/* Action Buttons */
+.action-btn {
+  background: #bfa77a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-family: 'EB Garamond', serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.action-btn:hover:not(:disabled) {
+  background: #a68a5b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.action-btn.primary {
+  background: #8b7355;
+}
+
+.action-btn.warning {
+  background: #c94f4f;
+}
+
+.action-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Footer */
+footer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e8dcc8;
+}
+
+.shop-btn {
+  background: #4caf50;
+}
+
+.shop-btn:hover {
+  background: #3d8b40;
+}
+
+/* Modals */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff9f0;
+  border: 3px solid #bfa77a;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.flower-shop-modal {
+  max-width: 1200px;
+}
+
+.modal h2 {
+  font-family: 'Playfair Display', serif;
+  color: #5a4a3a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.help-content {
+  line-height: 1.8;
+}
+
+.help-content h3 {
+  color: #5a4a3a;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Upgrades */
+.upgrades-list {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.upgrade-card {
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upgrade-name {
+  font-weight: bold;
+  color: #5a4a3a;
+}
+
+.upgrade-cost {
+  color: #8b7355;
+}
+
+/* Shop Layout */
+.shop-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 1.5rem;
+}
+
+.shop-available-flowers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.shop-flower-item {
+  font-size: 2rem;
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Notifications */
+.notifications {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notification {
+  background: white;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: slideIn 0.3s ease-out;
+  min-width: 250px;
+}
+
+.notification.success {
+  border-color: #4caf50;
+  background: #e8f5e9;
+}
+
+.notification.error {
+  border-color: #c94f4f;
+  background: #ffebee;
+}
+
+.notification.warning {
+  border-color: #ff9800;
+  background: #fff3e0;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Visual Garden View */
+.visual-garden {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(to bottom, #f4f1e4 0%, #e8dcc8 100%);
+  border: 3px solid #8b7355;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(139,115,85,0.1);
+}
+
+.visual-garden::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,115,85,0.03) 2px, rgba(139,115,85,0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139,115,85,0.03) 2px, rgba(139,115,85,0.03) 4px);
+  pointer-events: none;
+}
+
+.garden-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 15%;
+  background: linear-gradient(to bottom, rgba(244,241,228,0.5), transparent);
+}
+
+.sun {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #8b7355;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0.3;
+}
+
+.sun::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px dashed #8b7355;
+  opacity: 0.2;
+}
+
+.cloud {
+  position: absolute;
+  border: 1px solid #8b7355;
+  border-radius: 20px;
+  opacity: 0.2;
+  background: transparent;
+  animation: float 20s ease-in-out infinite;
+}
+
+.cloud-1 {
+  width: 60px;
+  height: 20px;
+  top: 20px;
+  left: 15%;
+}
+
+.cloud-2 {
+  width: 70px;
+  height: 22px;
+  top: 30px;
+  left: 70%;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(30px); }
+}
+
+.garden-scene {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  top: 15%;
+}
+
+.soil-row {
+  position: relative;
+}
+
+.soil-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(139,115,85,0.1) 20px, rgba(139,115,85,0.1) 21px);
+  pointer-events: none;
+}
+
+.garden-ground {
+  display: none;
+}
+
+.fence {
+  display: none;
+}
+
+.path {
+  display: none;
+}
+
+.visual-plants {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.visual-plant {
+  position: absolute;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  filter: sepia(0.15) contrast(1.05);
+  text-shadow: 1px 1px 2px rgba(90,74,58,0.2);
+  transform: translateX(-50%);
+}
+
+.visual-plant:hover {
+  transform: translateX(-50%) scale(1.15) translateY(-3px);
+  filter: sepia(0.1) contrast(1.1);
+}
+
+.garden-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.butterfly, .bee {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.4;
+  filter: sepia(0.3);
+  animation: fly 15s ease-in-out infinite;
+}
+
+.butterfly-1 {
+  top: 15%;
+  left: 20%;
+}
+
+.butterfly-2 {
+  top: 25%;
+  right: 25%;
+  animation-delay: -7s;
+}
+
+.bee {
+  top: 20%;
+  left: 60%;
+  animation-delay: -3s;
+}
+
+@keyframes fly {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(30px, -15px); }
+  50% { transform: translate(60px, 10px); }
+  75% { transform: translate(20px, -5px); }
+}
+
+/* Arrangement Canvas */
+.arrangement-area {
+  padding: 1rem;
+}
+
+.arrangement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e8dcc8;
+}
+
+.arrangement-tools {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tool-btn {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #bfa77a;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.tool-btn:hover {
+  background: #f4f1e4;
+  transform: scale(1.1);
+}
+
+.arrangement-canvas {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: white;
+  border: 3px solid #bfa77a;
+  border-radius: 12px;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+}
+
+.canvas-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, #fff9f0, #f4f1e4);
+  opacity: 0.6;
+}
+
+.arrangement-flowers {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.canvas-flower {
+  position: absolute;
+  font-size: 3rem;
+  cursor: move;
+  transition: opacity 0.2s;
+  user-select: none;
+}
+
+.canvas-flower.selected {
+  filter: drop-shadow(0 0 8px #4caf50);
+}
+
+.canvas-flower:hover {
+  opacity: 0.8;
+}
+
+.vase {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 120px;
+  background: linear-gradient(to bottom, #8B7355 0%, #6B5345 100%);
+  border-radius: 0 0 40px 40px;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.arrangement-score {
+  margin-top: 1rem;
+}
+
+.score-item {
+  margin-bottom: 0.8rem;
+}
+
+.score-item span:first-child {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+  color: #5a4a3a;
+}
+
+.score-bar {
+  display: inline-block;
+  width: 200px;
+  height: 20px;
+  background: #e8dcc8;
+  border-radius: 10px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.score-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.score-fill.aesthetic {
+  background: linear-gradient(90deg, #ff6b9d, #c44569);
+}
+
+.score-fill.trend {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+}
+
+.score-fill.harmony {
+  background: linear-gradient(90deg, #43e97b, #38f9d7);
+}
+
+.total-value {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e8dcc8;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  color: #4caf50;
+}
+
+/* Wrapper and Ribbon Selection */
+.wrapper-selection, .ribbon-selection {
+  margin: 1rem 0;
+}
+
+.wrapper-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.wrapper-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.8rem;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+}
+
+.wrapper-option:hover {
+  background: #f4f1e4;
+}
+
+.wrapper-option.selected {
+  border-color: #4caf50;
+  background: #e8f5e9;
+}
+
+.wrapper-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  margin-bottom: 0.3rem;
+}
+
+.classic-wrap {
+  background: linear-gradient(135deg, #f4f1e4, #e8dcc8);
+}
+
+.elegant-wrap {
+  background: linear-gradient(135deg, #fff, #f0f0f0);
+}
+
+.rustic-wrap {
+  background: linear-gradient(135deg, #d2b48c, #8b7355);
+}
+
+.luxury-wrap {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+}
+
+.ribbon-options {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.ribbon-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 3px solid transparent;
+}
+
+.ribbon-option:hover {
+  transform: scale(1.1);
+}
+
+.ribbon-option.selected {
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.shop-flower-item .count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #4caf50;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.shop-flower-item {
+  position: relative;
+}
+/* ===== BOTANICAL NOTEBOOK ADDITIONS ===== */
+
+/* Always-visible money counter */
+.money-corner {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #fff9f0;
+  border: 3px solid #bfa77a;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 16px rgba(60,40,20,0.25);
+  z-index: 1000;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #5a4a3a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.money-icon {
+  font-size: 1.8rem;
+}
+
+/* Enhanced botanical notebook background */
+body {
+  background: #f4f1e4 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23f4f1e4" width="100" height="100"/><line x1="0" y1="50" x2="100" y2="50" stroke="%23e8dcc8" stroke-width="0.5" opacity="0.3"/><line x1="0" y1="25" x2="100" y2="25" stroke="%23e8dcc8" stroke-width="0.3" opacity="0.2"/><line x1="0" y1="75" x2="100" y2="75" stroke="%23e8dcc8" stroke-width="0.3" opacity="0.2"/></svg>');
+  background-size: 100% 40px;
+}
+
+.game-container {
+  position: relative;
+  background: linear-gradient(to bottom, #fff9f0 0%, #f8f5e9 100%);
+  border: 4px double #bfa77a;
+  box-shadow: 
+    0 8px 32px rgba(60,40,20,0.15),
+    inset 0 0 60px rgba(255,249,240,0.6);
+}
+
+/* Flower visuals using color-coded symbols */
+.flower-visual {
+  display: inline-block;
+  font-size: 2.5rem;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 3px rgba(90,74,58,0.3));
+  transition: all 0.3s ease;
+}
+
+/* Color mapping for different flowers */
+.flower-visual[data-color="red"] { color: #c41e3a; }
+.flower-visual[data-color="pink"] { color: #ff69b4; }
+.flower-visual[data-color="purple"] { color: #9370db; }
+.flower-visual[data-color="blue"] { color: #4169e1; }
+.flower-visual[data-color="yellow"] { color: #ffd700; }
+.flower-visual[data-color="orange"] { color: #ff8c00; }
+.flower-visual[data-color="white"] { color: #f8f8f8; text-shadow: 0 0 2px #888; }
+.flower-visual[data-color="green"] { color: #228b22; }
+.flower-visual[data-color="jade"] { color: #00a86b; }
+.flower-visual[data-color="brown"] { color: #8b4513; }
+.flower-visual[data-color="black"] { color: #2f2f2f; }
+.flower-visual[data-color="peach"] { color: #ffdab9; }
+
+.sprout-visual {
+  color: #8fbc8f;
+  font-size: 1.5rem;
+}
+
+/* Compact Flower Shop Modal */
+.flower-shop-modal-compact {
+  width: 95%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff9f0;
+  border: 3px solid #bfa77a;
+  padding: 1.5rem;
+}
+
+.flower-shop-modal-compact .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #5a4a3a;
+}
+
+.shop-compact-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.shop-section {
+  background: #f8f5e9;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.shop-section h3 {
+  font-family: 'Playfair Display', serif;
+  color: #5a4a3a;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #e8dcc8;
+  padding-bottom: 0.5rem;
+}
+
+/* Flowers section - left column, spans 2 rows */
+.flowers-section {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.shop-flower-scroll {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.shop-flower-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.shop-flower-scroll::-webkit-scrollbar-track {
+  background: #f4f1e4;
+  border-radius: 4px;
+}
+
+.shop-flower-scroll::-webkit-scrollbar-thumb {
+  background: #bfa77a;
+  border-radius: 4px;
+}
+
+.shop-flower-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid #e8dcc8;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shop-flower-item:hover {
+  background: #f4f1e4;
+  border-color: #bfa77a;
+  transform: translateX(4px);
+}
+
+.shop-flower-item .flower-visual {
+  font-size: 1.8rem;
+}
+
+.shop-flower-item .flower-label {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #4a3b2c;
+}
+
+.shop-flower-item .count {
+  background: #bfa77a;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* Canvas section - top right */
+.canvas-section {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.arrangement-canvas-compact {
+  width: 100%;
+  height: 300px;
+  background: #fefdfb;
+  border: 2px dashed #bfa77a;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arrangement-tools-inline {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  justify-content: center;
+}
+
+.arrangement-tools-inline button {
+  padding: 0.5rem 1rem;
+  background: #e8dcc8;
+  border: 1px solid #bfa77a;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+  color: #4a3b2c;
+  transition: all 0.2s ease;
+}
+
+.arrangement-tools-inline button:hover {
+  background: #bfa77a;
+  color: #fff;
+}
+
+/* Scores section - bottom left of right column */
+.scores-section {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.score-label {
+  min-width: 80px;
+  font-weight: bold;
+  color: #6a5a4a;
+  font-size: 0.95rem;
+}
+
+.score-bar-compact {
+  flex: 1;
+  height: 18px;
+  background: #f4f1e4;
+  border: 1px solid #e8dcc8;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.total-value-row {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid #e8dcc8;
+  font-size: 1.3rem;
+  color: #5a4a3a;
+  text-align: right;
+}
+
+/* Presentation section - overlays at bottom */
+.presentation-section {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.presentation-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.presentation-row label {
+  font-weight: bold;
+  color: #6a5a4a;
+  min-width: 60px;
+}
+
+.wrapper-options-inline {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wrapper-options-inline .wrapper-option {
+  padding: 0.4rem 0.8rem;
+  background: #fff;
+  border: 2px solid #e8dcc8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.9rem;
+  color: #4a3b2c;
+  transition: all 0.2s ease;
+}
+
+.wrapper-options-inline .wrapper-option:hover {
+  border-color: #bfa77a;
+  background: #f4f1e4;
+}
+
+.wrapper-options-inline .wrapper-option.selected {
+  background: #bfa77a;
+  color: #fff;
+  border-color: #8b7355;
+}
+
+.ribbon-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ribbon-option {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ribbon-option:hover {
+  transform: scale(1.1);
+  border-color: #888;
+}
+
+.ribbon-option.selected {
+  border: 3px solid #5a4a3a;
+  box-shadow: 0 0 8px rgba(90,74,58,0.5);
+}
+
+.primary-button {
+  padding: 0.75rem 2rem;
+  background: #8b7355;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(60,40,20,0.2);
+}
+
+.primary-button:hover {
+  background: #6a5a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(60,40,20,0.3);
+}
+
+/* Canvas flower positioning */
+.canvas-flower {
+  position: absolute;
+  cursor: move;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.canvas-flower.selected {
+  filter: drop-shadow(0 0 8px rgba(139,115,85,0.8));
+}
+
+.canvas-flower .flower-visual {
+  font-size: 2rem;
+  pointer-events: none;
+}
+
+/* Seed card updates for botanical names */
+.seed-card {
+  background: #fff;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.seed-card:hover {
+  border-color: #bfa77a;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(60,40,20,0.15);
+}
+
+.seed-card.selected {
+  border-color: #8b7355;
+  background: #f4f1e4;
+  border-width: 3px;
+}
+
+.seed-card .flower-visual {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.seed-card .seed-name {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #6a5a4a;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.seed-card .seed-common {
+  font-weight: bold;
+  color: #4a3b2c;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.seed-card .seed-cost {
+  background: #bfa77a;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+
+.seed-card .seed-info {
+  font-size: 0.8rem;
+  color: #8b7355;
+  margin-top: 0.25rem;
+}
+
+/* ===== INVENTORY AND MARKET STYLING ===== */
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #fff;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inventory-item:hover {
+  border-color: #bfa77a;
+  background: #f4f1e4;
+  transform: translateX(4px);
+}
+
+.inventory-item .flower-visual {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.inv-name-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.inv-scientific {
+  font-size: 0.85rem;
+  color: #6a5a4a;
+  line-height: 1.2;
+}
+
+.inv-common {
+  font-weight: bold;
+  color: #4a3b2c;
+  font-size: 0.95rem;
+}
+
+.inv-count {
+  background: #bfa77a;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.demand-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #f8f5e9;
+  border-radius: 6px;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.demand-item .flower-visual {
+  font-size: 1.5rem;
+}
+
+.demand-flower-name {
+  flex: 1;
+  color: #4a3b2c;
+  font-weight: 600;
+}
+
+.demand-value {
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #e8dcc8;
+}
+
+.demand-item.high-demand .demand-value {
+  background: #d4f4dd;
+  color: #2d7a3e;
+}
+
+.demand-item.low-demand .demand-value {
+  background: #ffe0e0;
+  color: #c94f4f;
+}
+
+.bouquet-flower {
+  display: inline-block;
+  margin: 0.25rem;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bouquet-flower:hover {
+  transform: scale(1.1);
+}
+
+.bouquet-flower .flower-visual {
+  font-size: 2.5rem;
+}
+
+.upgrade-card {
+  background: #fff;
+  border: 2px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.upgrade-card:hover {
+  border-color: #bfa77a;
+  box-shadow: 0 2px 8px rgba(60,40,20,0.1);
+}
+
+.upgrade-name {
+  font-weight: bold;
+  color: #4a3b2c;
+  font-size: 1.05rem;
+}
+
+.upgrade-cost {
+  color: #8b7355;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.upgrade-btn {
+  padding: 0.5rem 1.5rem;
+  background: #8b7355;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.upgrade-btn:hover:not(:disabled) {
+  background: #6a5a4a;
+}
+
+.upgrade-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===== VICTORIAN BOTANICAL FONT STYLING ===== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', 'EB Garamond', serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+h1 {
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+button, .action-btn, .btn {
+  font-family: 'Crimson Text', 'EB Garamond', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.hint, em, i {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+}
+
+label, .stat-label, .seed-name, .inv-common {
+  font-family: 'Crimson Text', serif;
+  font-weight: 600;
+}
+
+/* Shop footer with return button */
+.shop-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e8dcc8;
+  text-align: center;
+}
+
+.return-button {
+  padding: 0.75rem 2.5rem;
+  background: #6a5a4a;
+  color: #fff;
+  border: 2px solid #5a4a3a;
+  border-radius: 8px;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(60,40,20,0.2);
+  letter-spacing: 1px;
+}
+
+.return-button:hover {
+  background: #5a4a3a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(60,40,20,0.3);
+}
+
+/* Enhanced readability for body text */
+p, span, div {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+}
+
+/* Close X button styling */
+.close {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #6a5a4a;
+  transition: all 0.2s ease;
+}
+
+.close:hover {
+  color: #4a3b2c;
+  transform: scale(1.1);
+}
+
+</style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+</head>
+<body>    <!-- Always visible money counter -->
+    <div id="money-corner" class="money-corner">
+        <span class="money-icon">💰</span>
+        <span id="money-display">$100</span>
+    </div>
+        <div class="game-container">
+        <header>
+            <h1>My Flower Garden</h1>
+            <p style="font-style: italic; color: #8b7355; margin-bottom: 10px; font-family: 'EB Garamond', serif;">~ A Botanical Journal, Est. 1847 ~</p>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-label">Treasury:</span>
+                    <span id="money">$100</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Week:</span>
+                    <span id="week">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Garden Plot:</span>
+                    <span id="garden-size">4×4</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-panels">
+                <!-- Left Panel: Garden Grid -->
+                <section class="panel garden-panel">
+                    <h2>The Garden</h2>
+                    <div class="garden-view-toggle">
+                        <button id="grid-view-btn" class="view-btn active">Plot View</button>
+                        <button id="visual-view-btn" class="view-btn">Garden View</button>
+                    </div>
+                    
+                    <!-- Grid View -->
+                    <div id="grid-view" class="garden-view">
+                        <div id="garden-grid" class="garden-grid"></div>
+                    </div>
+                    
+                    <!-- Visual Garden View -->
+                    <div id="visual-view" class="garden-view hidden">
+                        <div class="visual-garden">
+                            <div class="garden-sky">
+                                <div class="sun"></div>
+                                <div class="cloud cloud-1"></div>
+                                <div class="cloud cloud-2"></div>
+                            </div>
+                            <div class="garden-scene">
+                                <div class="garden-back-row"></div>
+                                <div class="garden-mid-row"></div>
+                                <div class="garden-front-row"></div>
+                                <div id="visual-plants" class="visual-plants"></div>
+                            </div>
+                            <div class="garden-ground">
+                                <div class="fence"></div>
+                                <div class="path"></div>
+                            </div>
+                            <div class="garden-decorations">
+                                <div class="butterfly butterfly-1">🦋</div>
+                                <div class="butterfly butterfly-2">🦋</div>
+                                <div class="bee">🐝</div>
+                            </div>
+                        </div>
+                        <div class="visual-garden-info">
+                            <p class="hint">Click on plants to water or harvest them</p>
+                        </div>
+                    </div>
+                    
+                    <div class="garden-actions">
+                        <button id="water-all-btn" class="action-btn">Water All ($5)</button>
+                        <button id="next-day-btn" class="action-btn primary">Advance Day</button>
+                    </div>
+                </section>
+
+                <!-- Center Panel: Seed Shop -->
+                <section class="panel shop-panel">
+                    <h2>Seed Catalogue</h2>
+                    <p class="hint">Select a seed, then choose an empty plot to sow</p>
+                    <div id="seed-shop" class="seed-shop"></div>
+                    
+                    <h2>Harvested Specimens</h2>
+                    <div id="inventory" class="inventory"></div>
+                </section>
+
+                <!-- Right Panel: Bouquet & Market -->
+                <section class="panel market-panel">
+                    <h2>Arrangement Table</h2>
+                    <div class="bouquet-section">
+                        <div id="bouquet-builder" class="bouquet-builder">
+                            <p class="hint">Select harvested flowers to compose an arrangement</p>
+                            <div id="current-bouquet" class="current-bouquet"></div>
+                            <div class="bouquet-value">
+                                <span>Estimated Value: </span><span id="bouquet-value">$0</span>
+                            </div>
+                            <button id="create-bouquet-btn" class="action-btn">Complete Arrangement</button>
+                        </div>
+                    </div>
+
+                    <h2>Weekly Market</h2>
+                    <div class="market-section">
+                        <div class="market-demand">
+                            <h3>Current Demand:</h3>
+                            <div id="market-demand"></div>
+                        </div>
+                        <div id="bouquets-for-sale" class="bouquets-for-sale"></div>
+                        <button id="end-week-btn" class="action-btn warning">Conclude Week & Sell</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Flower Shop Modal -->
+        <div id="flower-shop-modal" class="modal hidden">
+            <div class="modal-content flower-shop-modal-compact">
+                <span class="close" id="close-flower-shop">&times;</span>
+                <h2>The Arrangement Studio</h2>
+                <div class="shop-compact-grid">
+                    <!-- Row 1: Flowers + Canvas -->
+                    <div class="shop-section flowers-section">
+                        <h3>Available Specimens</h3>
+                        <div id="shop-available-flowers" class="shop-flower-scroll"></div>
+                    </div>
+                    
+                    <div class="shop-section canvas-section">
+                        <div id="arrangement-canvas" class="arrangement-canvas-compact">
+                            <div id="arrangement-flowers" class="arrangement-flowers"></div>
+                        </div>
+                        <div class="arrangement-tools-inline">
+                            <button id="rotate-flower">↻</button>
+                            <button id="size-up">+</button>
+                            <button id="size-down">−</button>
+                            <button id="clear-arrangement">Clear</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2: Scores + Presentation -->
+                    <div class="shop-section scores-section">
+                        <div class="score-row">
+                            <span class="score-label">Aesthetic:</span>
+                            <div class="score-bar-compact"><div id="aesthetic-score" class="score-fill aesthetic"></div></div>
+                        </div>
+                        <div class="score-row">
+                            <span class="score-label">Fashion:</span>
+                            <div class="score-bar-compact"><div id="trend-score" class="score-fill trend"></div></div>
+                        </div>
+                        <div class="score-row">
+                            <span class="score-label">Harmony:</span>
+                            <div class="score-bar-compact"><div id="harmony-score" class="score-fill harmony"></div></div>
+                        </div>
+                        <div class="total-value-row">
+                            <strong>Value: <span id="arrangement-value">$0</span></strong>
+                        </div>
+                    </div>
+                    
+                    <div class="shop-section presentation-section">
+                        <div class="presentation-row">
+                            <label>Paper:</label>
+                            <div class="wrapper-options-inline">
+                                <button class="wrapper-option selected" data-wrapper="classic">Classic</button>
+                                <button class="wrapper-option" data-wrapper="elegant">Elegant</button>
+                                <button class="wrapper-option" data-wrapper="rustic">Rustic</button>
+                                <button class="wrapper-option" data-wrapper="luxury">Luxury</button>
+                            </div>
+                        </div>
+                        <div class="presentation-row">
+                            <label>Ribbon:</label>
+                            <div class="ribbon-options">
+                                <div class="ribbon-option selected" data-color="#8b4557" style="background: #8b4557;"></div>
+                                <div class="ribbon-option" data-color="#704f38" style="background: #704f38;"></div>
+                                <div class="ribbon-option" data-color="#4a5d3a" style="background: #4a5d3a;"></div>
+                                <div class="ribbon-option" data-color="#b8956e" style="background: #b8956e;"></div>
+                            </div>
+                        </div>
+                        <button id="create-shop-bouquet" class="primary-button">Complete & List</button>
+                    </div>
+                </div>
+                <div class="shop-footer">
+                    <button id="close-flower-shop-btn" class="return-button">← Return to Garden</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upgrade Modal -->
+            </div>
+        </div>
+
+        <!-- Upgrade Modal -->
+        <div id="upgrade-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>🔧 Upgrades</h2>
+                <div id="upgrades-list" class="upgrades-list"></div>
+                <button id="close-upgrades" class="action-btn">Close</button>
+            </div>
+        </div>
+
+        <!-- Footer with upgrade button -->
+        <footer>
+            <button id="flower-shop-btn" class="action-btn shop-btn">Enter the Flower Shoppe</button>
+            <button id="upgrades-btn" class="action-btn">View Improvements</button>
+            <button id="help-btn" class="action-btn">Instructions</button>
+        </footer>
+
+        <!-- Help Modal -->
+        <div id="help-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Instructions for the Gardener</h2>
+                <div class="help-content">
+                    <h3>§ Planting</h3>
+                    <p>Select a seed variety from the catalogue, then choose an empty plot in your garden to sow it.</p>
+                    
+                    <h3>§ Cultivation</h3>
+                    <p>Plants require regular watering. Click upon a plant to water it individually, or employ "Water All" for convenience. Advance time with "Advance Day".</p>
+                    
+                    <h3>§ Harvesting</h3>
+                    <p>When a plant reaches maturity (indicated by its full bloom), click to harvest. Specimens are placed in your collection.</p>
+                    
+                    <h3>§ Arrangements</h3>
+                    <p>Select flowers from your collection to compose bouquets. Different combinations yield different valuations.</p>
+                    
+                    <h3>§ The Market</h3>
+                    <p>Each week brings different demands. Sell arrangements that match current fashions for premium prices. Conclude the week to sell all prepared bouquets.</p>
+                    
+                    <h3>§ Improvements</h3>
+                    <p>Save your earnings to purchase improvements: larger gardens, exotic seeds, and superior tools.</p>
+                </div>
+                <button id="close-help" class="action-btn">I Understand</button>
+            </div>
+        </div>
+
+        <!-- Notification area -->
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <script>
+// game.js - My Flower Garden - A Botanical Journal Game
+
+// ========== GAME DATA ==========
+const FLOWER_TYPES = [
+  // Common flowers (unlocked at start)
+  { id: 'dandelion', name: 'Taraxacum officinale', common: 'Dandelion', cost: 2, growth: 1, water: 1, rarity: 0.5, baseValue: 3, color: 'yellow' },
+  { id: 'fern', name: 'Nephrolepis exaltata', common: 'Boston Fern', cost: 5, growth: 2, water: 1, rarity: 1, baseValue: 5, color: 'green' },
+  { id: 'tulip', name: 'Tulipa gesneriana', common: 'Garden Tulip', cost: 8, growth: 3, water: 2, rarity: 1, baseValue: 8, color: 'red' },
+  { id: 'marigold', name: 'Tagetes erecta', common: 'African Marigold', cost: 6, growth: 2, water: 2, rarity: 1, baseValue: 6, color: 'orange' },
+  { id: 'daisy', name: 'Bellis perennis', common: 'Common Daisy', cost: 6, growth: 2, water: 1, rarity: 1, baseValue: 6, color: 'white' },
+  
+  // Tier 1 - Low cost (locked initially)
+  { id: 'pansy', name: 'Viola tricolor', common: 'Wild Pansy', cost: 9, growth: 3, water: 2, rarity: 1.2, baseValue: 9, color: 'purple', locked: true },
+  { id: 'zinnia', name: 'Zinnia elegans', common: 'Youth-and-Age', cost: 11, growth: 3, water: 2, rarity: 1.3, baseValue: 10, color: 'pink', locked: true },
+  { id: 'cosmos', name: 'Cosmos bipinnatus', common: 'Garden Cosmos', cost: 11, growth: 3, water: 2, rarity: 1.2, baseValue: 9, color: 'pink', locked: true },
+  { id: 'snapdragon', name: 'Antirrhinum majus', common: 'Snapdragon', cost: 12, growth: 3, water: 2, rarity: 1.4, baseValue: 11, color: 'red', locked: true },
+  { id: 'sunflower', name: 'Helianthus annuus', common: 'Common Sunflower', cost: 12, growth: 4, water: 2, rarity: 1.5, baseValue: 12, color: 'yellow', locked: true },
+  
+  // Tier 2 - Medium cost
+  { id: 'rose', name: 'Rosa hybrida', common: 'Hybrid Tea Rose', cost: 23, growth: 5, water: 3, rarity: 2, baseValue: 20, color: 'red', locked: true },
+  { id: 'lily', name: 'Lilium candidum', common: 'Madonna Lily', cost: 18, growth: 4, water: 2, rarity: 1.8, baseValue: 18, color: 'white', locked: true },
+  { id: 'iris', name: 'Iris germanica', common: 'Bearded Iris', cost: 20, growth: 4, water: 2, rarity: 1.7, baseValue: 17, color: 'purple', locked: true },
+  { id: 'carnation', name: 'Dianthus caryophyllus', common: 'Carnation', cost: 15, growth: 4, water: 2, rarity: 1.6, baseValue: 14, color: 'pink', locked: true },
+  { id: 'chrysanthemum', name: 'Chrysanthemum morifolium', common: 'Florist Mum', cost: 17, growth: 4, water: 2, rarity: 1.6, baseValue: 15, color: 'yellow', locked: true },
+  { id: 'dahlia', name: 'Dahlia pinnata', common: 'Garden Dahlia', cost: 21, growth: 5, water: 3, rarity: 1.9, baseValue: 19, color: 'red', locked: true },
+  { id: 'peony', name: 'Paeonia lactiflora', common: 'Chinese Peony', cost: 24, growth: 5, water: 3, rarity: 2.1, baseValue: 22, color: 'pink', locked: true },
+  { id: 'hydrangea', name: 'Hydrangea macrophylla', common: 'Bigleaf Hydrangea', cost: 23, growth: 5, water: 3, rarity: 2, baseValue: 21, color: 'blue', locked: true },
+  
+  // Tier 3 - High cost
+  { id: 'orchid-phalaenopsis', name: 'Phalaenopsis amabilis', common: 'Moth Orchid', cost: 38, growth: 6, water: 3, rarity: 2.5, baseValue: 35, color: 'white', locked: true },
+  { id: 'orchid-cattleya', name: 'Cattleya labiata', common: 'Corsage Orchid', cost: 42, growth: 6, water: 3, rarity: 2.6, baseValue: 38, color: 'purple', locked: true },
+  { id: 'protea', name: 'Protea cynaroides', common: 'King Protea', cost: 45, growth: 7, water: 3, rarity: 2.8, baseValue: 42, color: 'pink', locked: true },
+  { id: 'delphinium', name: 'Delphinium elatum', common: 'Candle Larkspur', cost: 30, growth: 5, water: 3, rarity: 2.2, baseValue: 28, color: 'blue', locked: true },
+  { id: 'anemone', name: 'Anemone coronaria', common: 'Poppy Anemone', cost: 27, growth: 5, water: 2, rarity: 2, baseValue: 24, color: 'red', locked: true },
+  { id: 'ranunculus', name: 'Ranunculus asiaticus', common: 'Persian Buttercup', cost: 33, growth: 5, water: 3, rarity: 2.3, baseValue: 30, color: 'pink', locked: true },
+  { id: 'gardenia', name: 'Gardenia jasminoides', common: 'Cape Jasmine', cost: 36, growth: 6, water: 3, rarity: 2.4, baseValue: 32, color: 'white', locked: true },
+  { id: 'camellia', name: 'Camellia japonica', common: 'Japanese Camellia', cost: 35, growth: 6, water: 3, rarity: 2.3, baseValue: 31, color: 'red', locked: true },
+  
+  // Tier 4 - Very high cost (exotic)
+  { id: 'bird-of-paradise', name: 'Strelitzia reginae', common: 'Crane Flower', cost: 60, growth: 8, water: 4, rarity: 3, baseValue: 55, color: 'orange', locked: true },
+  { id: 'calla-lily', name: 'Zantedeschia aethiopica', common: 'Calla Lily', cost: 53, growth: 7, water: 3, rarity: 2.8, baseValue: 48, color: 'white', locked: true },
+  { id: 'amaryllis', name: 'Hippeastrum hybridum', common: 'Amaryllis', cost: 48, growth: 6, water: 3, rarity: 2.7, baseValue: 45, color: 'red', locked: true },
+  { id: 'hellebore', name: 'Helleborus niger', common: 'Christmas Rose', cost: 57, growth: 7, water: 3, rarity: 2.9, baseValue: 52, color: 'white', locked: true },
+  { id: 'passion-flower', name: 'Passiflora caerulea', common: 'Blue Passionflower', cost: 54, growth: 7, water: 4, rarity: 2.8, baseValue: 50, color: 'blue', locked: true },
+  { id: 'lotus', name: 'Nelumbo nucifera', common: 'Sacred Lotus', cost: 68, growth: 8, water: 5, rarity: 3.2, baseValue: 62, color: 'pink', locked: true },
+  { id: 'magnolia', name: 'Magnolia grandiflora', common: 'Southern Magnolia', cost: 63, growth: 8, water: 4, rarity: 3.1, baseValue: 58, color: 'white', locked: true },
+  { id: 'wisteria', name: 'Wisteria sinensis', common: 'Chinese Wisteria', cost: 57, growth: 7, water: 3, rarity: 2.9, baseValue: 53, color: 'purple', locked: true },
+  
+  // Tier 5 - Premium/Rare
+  { id: 'blue-poppy', name: 'Meconopsis betonicifolia', common: 'Himalayan Blue Poppy', cost: 90, growth: 9, water: 4, rarity: 3.5, baseValue: 80, color: 'blue', locked: true },
+  { id: 'ghost-orchid', name: 'Dendrophylax lindenii', common: 'Ghost Orchid', cost: 113, growth: 10, water: 4, rarity: 4, baseValue: 100, color: 'white', locked: true },
+  { id: 'juliet-rose', name: 'Rosa \'Sweet Juliet\'', common: 'Juliet Rose', cost: 98, growth: 9, water: 4, rarity: 3.7, baseValue: 88, color: 'peach', locked: true },
+  { id: 'kadupul', name: 'Epiphyllum oxypetalum', common: 'Queen of the Night', cost: 120, growth: 10, water: 5, rarity: 4.2, baseValue: 110, color: 'white', locked: true },
+  { id: 'chocolate-cosmos', name: 'Cosmos atrosanguineus', common: 'Chocolate Cosmos', cost: 83, growth: 8, water: 3, rarity: 3.3, baseValue: 75, color: 'brown', locked: true },
+  { id: 'parrot-flower', name: 'Impatiens psittacina', common: 'Parrot Flower', cost: 105, growth: 9, water: 4, rarity: 3.8, baseValue: 95, color: 'red', locked: true },
+  { id: 'jade-vine', name: 'Strongylodon macrobotrys', common: 'Jade Vine', cost: 102, growth: 9, water: 4, rarity: 3.7, baseValue: 92, color: 'jade', locked: true },
+  { id: 'middlemist-red', name: 'Camellia \'Middlemist\'', common: 'Middlemist Red', cost: 135, growth: 11, water: 5, rarity: 4.5, baseValue: 125, color: 'pink', locked: true },
+  { id: 'corpse-flower', name: 'Amorphophallus titanum', common: 'Titan Arum', cost: 128, growth: 12, water: 5, rarity: 4.3, baseValue: 115, color: 'purple', locked: true },
+  { id: 'black-bat', name: 'Tacca chantrieri', common: 'Black Bat Flower', cost: 108, growth: 9, water: 4, rarity: 3.9, baseValue: 98, color: 'black', locked: true },
+  { id: 'bleeding-heart', name: 'Lamprocapnos spectabilis', common: 'Bleeding Heart', cost: 42, growth: 6, water: 3, rarity: 2.5, baseValue: 38, color: 'pink', locked: true },
+  { id: 'foxglove', name: 'Digitalis purpurea', common: 'Common Foxglove', cost: 29, growth: 5, water: 2, rarity: 2.1, baseValue: 26, color: 'purple', locked: true },
+  { id: 'edelweiss', name: 'Leontopodium alpinum', common: 'Edelweiss', cost: 72, growth: 8, water: 3, rarity: 3.2, baseValue: 65, color: 'white', locked: true },
+  { id: 'fire-lily', name: 'Gloriosa superba', common: 'Flame Lily', cost: 78, growth: 8, water: 4, rarity: 3.3, baseValue: 70, color: 'red', locked: true },
+];
+
+const UPGRADES = [
+  { id: 'garden-6x6', name: 'Expand Garden to 6×6', cost: 150, type: 'garden', value: 6 },
+  { id: 'garden-8x8', name: 'Expand Garden to 8×8', cost: 375, type: 'garden', value: 8 },
+  { id: 'garden-10x10', name: 'Expand Garden to 10×10', cost: 750, type: 'garden', value: 10 },
+  { id: 'garden-12x12', name: 'Expand Garden to 12×12', cost: 1500, type: 'garden', value: 12 },
+  { id: 'garden-16x16', name: 'Expand Garden to 16×16', cost: 3750, type: 'garden', value: 16 },
+  
+  // Tier 1 unlocks
+  { id: 'unlock-pansy', name: 'Unlock Pansy Seeds', cost: 45, type: 'seed', value: 'pansy' },
+  { id: 'unlock-zinnia', name: 'Unlock Zinnia Seeds', cost: 53, type: 'seed', value: 'zinnia' },
+  { id: 'unlock-cosmos', name: 'Unlock Cosmos Seeds', cost: 53, type: 'seed', value: 'cosmos' },
+  { id: 'unlock-snapdragon', name: 'Unlock Snapdragon Seeds', cost: 60, type: 'seed', value: 'snapdragon' },
+  { id: 'unlock-sunflower', name: 'Unlock Sunflower Seeds', cost: 68, type: 'seed', value: 'sunflower' },
+  
+  // Tier 2 unlocks
+  { id: 'unlock-rose', name: 'Unlock Rose Seeds', cost: 120, type: 'seed', value: 'rose' },
+  { id: 'unlock-lily', name: 'Unlock Lily Seeds', cost: 105, type: 'seed', value: 'lily' },
+  { id: 'unlock-iris', name: 'Unlock Iris Seeds', cost: 113, type: 'seed', value: 'iris' },
+  { id: 'unlock-carnation', name: 'Unlock Carnation Seeds', cost: 90, type: 'seed', value: 'carnation' },
+  { id: 'unlock-chrysanthemum', name: 'Unlock Chrysanthemum Seeds', cost: 98, type: 'seed', value: 'chrysanthemum' },
+  { id: 'unlock-dahlia', name: 'Unlock Dahlia Seeds', cost: 128, type: 'seed', value: 'dahlia' },
+  { id: 'unlock-peony', name: 'Unlock Peony Seeds', cost: 135, type: 'seed', value: 'peony' },
+  { id: 'unlock-hydrangea', name: 'Unlock Hydrangea Seeds', cost: 128, type: 'seed', value: 'hydrangea' },
+  
+  // Tier 3 unlocks
+  { id: 'unlock-orchid-phalaenopsis', name: 'Unlock Moth Orchid Seeds', cost: 225, type: 'seed', value: 'orchid-phalaenopsis' },
+  { id: 'unlock-orchid-cattleya', name: 'Unlock Corsage Orchid Seeds', cost: 240, type: 'seed', value: 'orchid-cattleya' },
+  { id: 'unlock-protea', name: 'Unlock Protea Seeds', cost: 270, type: 'seed', value: 'protea' },
+  { id: 'unlock-delphinium', name: 'Unlock Delphinium Seeds', cost: 180, type: 'seed', value: 'delphinium' },
+  { id: 'unlock-anemone', name: 'Unlock Anemone Seeds', cost: 165, type: 'seed', value: 'anemone' },
+  { id: 'unlock-ranunculus', name: 'Unlock Ranunculus Seeds', cost: 195, type: 'seed', value: 'ranunculus' },
+  { id: 'unlock-gardenia', name: 'Unlock Gardenia Seeds', cost: 218, type: 'seed', value: 'gardenia' },
+  { id: 'unlock-camellia', name: 'Unlock Camellia Seeds', cost: 210, type: 'seed', value: 'camellia' },
+  { id: 'unlock-bleeding-heart', name: 'Unlock Bleeding Heart Seeds', cost: 248, type: 'seed', value: 'bleeding-heart' },
+  { id: 'unlock-foxglove', name: 'Unlock Foxglove Seeds', cost: 173, type: 'seed', value: 'foxglove' },
+  
+  // Tier 4 unlocks
+  { id: 'unlock-bird-of-paradise', name: 'Unlock Bird of Paradise Seeds', cost: 375, type: 'seed', value: 'bird-of-paradise' },
+  { id: 'unlock-calla-lily', name: 'Unlock Calla Lily Seeds', cost: 330, type: 'seed', value: 'calla-lily' },
+  { id: 'unlock-amaryllis', name: 'Unlock Amaryllis Seeds', cost: 300, type: 'seed', value: 'amaryllis' },
+  { id: 'unlock-hellebore', name: 'Unlock Hellebore Seeds', cost: 360, type: 'seed', value: 'hellebore' },
+  { id: 'unlock-passion-flower', name: 'Unlock Passion Flower Seeds', cost: 345, type: 'seed', value: 'passion-flower' },
+  { id: 'unlock-lotus', name: 'Unlock Lotus Seeds', cost: 420, type: 'seed', value: 'lotus' },
+  { id: 'unlock-magnolia', name: 'Unlock Magnolia Seeds', cost: 390, type: 'seed', value: 'magnolia' },
+  { id: 'unlock-wisteria', name: 'Unlock Wisteria Seeds', cost: 360, type: 'seed', value: 'wisteria' },
+  { id: 'unlock-edelweiss', name: 'Unlock Edelweiss Seeds', cost: 450, type: 'seed', value: 'edelweiss' },
+  { id: 'unlock-fire-lily', name: 'Unlock Fire Lily Seeds', cost: 480, type: 'seed', value: 'fire-lily' },
+  
+  // Tier 5 unlocks (premium)
+  { id: 'unlock-blue-poppy', name: 'Unlock Blue Poppy Seeds', cost: 600, type: 'seed', value: 'blue-poppy' },
+  { id: 'unlock-ghost-orchid', name: 'Unlock Ghost Orchid Seeds', cost: 750, type: 'seed', value: 'ghost-orchid' },
+  { id: 'unlock-juliet-rose', name: 'Unlock Juliet Rose Seeds', cost: 675, type: 'seed', value: 'juliet-rose' },
+  { id: 'unlock-kadupul', name: 'Unlock Queen of the Night Seeds', cost: 825, type: 'seed', value: 'kadupul' },
+  { id: 'unlock-chocolate-cosmos', name: 'Unlock Chocolate Cosmos Seeds', cost: 570, type: 'seed', value: 'chocolate-cosmos' },
+  { id: 'unlock-parrot-flower', name: 'Unlock Parrot Flower Seeds', cost: 720, type: 'seed', value: 'parrot-flower' },
+  { id: 'unlock-jade-vine', name: 'Unlock Jade Vine Seeds', cost: 705, type: 'seed', value: 'jade-vine' },
+  { id: 'unlock-middlemist-red', name: 'Unlock Middlemist Red Seeds', cost: 900, type: 'seed', value: 'middlemist-red' },
+  { id: 'unlock-corpse-flower', name: 'Unlock Corpse Flower Seeds', cost: 870, type: 'seed', value: 'corpse-flower' },
+  { id: 'unlock-black-bat', name: 'Unlock Black Bat Flower Seeds', cost: 735, type: 'seed', value: 'black-bat' },
+  
+  { id: 'better-tools', name: 'Superior Watering Tools', cost: 75, type: 'tool', value: 1 },
+  { id: 'advanced-tools', name: 'Advanced Watering System', cost: 225, type: 'tool', value: 2 },
+];
+
+// Game State
+const GameState = {
+  money: 100,
+  week: 1,
+  day: 1,
+  gardenSize: 4,
+  garden: [],
+  inventory: [],
+  bouquets: [],
+  marketDemand: {},
+  selectedSeed: null,
+  currentBouquet: [],
+  upgrades: [],
+  toolLevel: 0,
+  arrangementFlowers: [],
+  selectedWrapper: 'classic',
+  selectedRibbon: '#8b4557',
+  selectedArrangementFlower: null
+};
+
+// ========== INITIALIZATION ==========
+document.addEventListener('DOMContentLoaded', () => {
+  initGame();
+  attachEventListeners();
+  generateMarketDemand();
+  render();
+});
+
+function initGame() {
+  const size = GameState.gardenSize;
+  GameState.garden = Array(size * size).fill(null).map(() => null);
+}
+
+function attachEventListeners() {
+  // Garden actions
+  document.getElementById('water-all-btn').addEventListener('click', waterAll);
+  document.getElementById('next-day-btn').addEventListener('click', advanceDay);
+  
+  // View toggle
+  document.getElementById('grid-view-btn').addEventListener('click', () => switchView('grid'));
+  document.getElementById('visual-view-btn').addEventListener('click', () => switchView('visual'));
+  
+  // Bouquet
+  document.getElementById('create-bouquet-btn').addEventListener('click', completeBouquet);
+  
+  // Market
+  document.getElementById('end-week-btn').addEventListener('click', endWeek);
+  
+  // Modals
+  document.getElementById('flower-shop-btn').addEventListener('click', openFlowerShop);
+  document.getElementById('close-flower-shop').addEventListener('click', closeFlowerShop);
+  document.getElementById('close-flower-shop-btn').addEventListener('click', closeFlowerShop);
+  document.getElementById('upgrades-btn').addEventListener('click', openUpgrades);
+  document.getElementById('close-upgrades').addEventListener('click', closeUpgrades);
+  document.getElementById('help-btn').addEventListener('click', openHelp);
+  document.getElementById('close-help').addEventListener('click', closeHelp);
+  
+  // Shop bouquet and arrangement tools
+  document.getElementById('create-shop-bouquet').addEventListener('click', createShopBouquet);
+  document.getElementById('clear-arrangement').addEventListener('click', clearArrangement);
+  document.getElementById('rotate-flower').addEventListener('click', rotateSelectedFlower);
+  document.getElementById('size-up').addEventListener('click', () => resizeSelectedFlower(1.2));
+  document.getElementById('size-down').addEventListener('click', () => resizeSelectedFlower(0.8));
+  
+  // Wrapper and ribbon selection
+  document.querySelectorAll('.wrapper-option').forEach(opt => {
+    opt.addEventListener('click', () => selectWrapper(opt.dataset.wrapper));
+  });
+  document.querySelectorAll('.ribbon-option').forEach(opt => {
+    opt.addEventListener('click', () => selectRibbon(opt.dataset.color));
+  });
+}
+
+// ========== RENDERING ==========
+function render() {
+  renderStats();
+  renderGarden();
+  renderSeedShop();
+  renderInventory();
+  renderMarketDemand();
+  renderBouquetsForSale();
+}
+
+function renderStats() {
+  document.getElementById('money').textContent = `${GameState.money}`;
+  const moneyDisplay = document.getElementById('money-display');
+  if (moneyDisplay) moneyDisplay.textContent = `${GameState.money}`;
+  document.getElementById('week').textContent = GameState.week;
+  document.getElementById('garden-size').textContent = `${GameState.gardenSize}×${GameState.gardenSize}`;
+}
+
+function renderGarden() {
+  const grid = document.getElementById('garden-grid');
+  grid.innerHTML = '';
+  grid.style.gridTemplateColumns = `repeat(${GameState.gardenSize}, 80px)`;
+  
+  GameState.garden.forEach((plant, idx) => {
+    const plot = document.createElement('div');
+    plot.className = 'plot';
+    
+    if (plant) {
+      const growthPercent = plant.stage / plant.growth;
+      const scale = 0.5 + (growthPercent * 0.5); // Scale from 0.5 to 1.0
+      const flowerSymbol = plant.stage >= plant.growth ? '✿' : '❀';
+      plot.innerHTML = `<div class="flower-visual" data-color="${plant.color}" style="transform: scale(${scale})">${flowerSymbol}</div>`;
+      plot.title = `${plant.common}\n(${plant.name})\nStage: ${plant.stage}/${plant.growth}\nWater: ${plant.watered}/${plant.water}\nClick to ${plant.stage >= plant.growth ? 'harvest' : 'water'}`;
+      
+      if (plant.stage >= plant.growth) {
+        plot.classList.add('ready');
+        plot.style.background = '#d4f4dd';
+      } else if (plant.stage > 0) {
+        plot.style.background = '#e8f5e9';
+      }
+      
+      plot.addEventListener('click', () => handlePlotClick(idx));
+    } else {
+      plot.textContent = '+';
+      plot.title = 'Plant a seed';
+      plot.addEventListener('click', () => plantSeed(idx));
+    }
+    
+    grid.appendChild(plot);
+  });
+  
+  renderVisualGarden();
+}
+
+function renderVisualGarden() {
+  const visualPlants = document.getElementById('visual-plants');
+  if (!visualPlants) return;
+  
+  visualPlants.innerHTML = '';
+  
+  // Create soil rows first
+  const gardenScene = document.querySelector('.garden-scene');
+  if (gardenScene) {
+    gardenScene.innerHTML = '';
+    const size = GameState.gardenSize;
+    const rowHeight = 60;
+    
+    for (let row = 0; row < size; row++) {
+      const soilRow = document.createElement('div');
+      soilRow.className = 'soil-row';
+      soilRow.style.position = 'absolute';
+      soilRow.style.bottom = `${row * rowHeight}px`;
+      soilRow.style.left = '0';
+      soilRow.style.right = '0';
+      soilRow.style.height = `${rowHeight}px`;
+      soilRow.style.background = `linear-gradient(to bottom, #8B7355 0%, #6B5345 100%)`;
+      soilRow.style.borderTop = '2px solid #5a4a3a';
+      soilRow.style.borderBottom = '1px dashed #9B8365';
+      gardenScene.appendChild(soilRow);
+    }
+    
+    // Re-add visual plants container
+    const plantsContainer = document.createElement('div');
+    plantsContainer.id = 'visual-plants';
+    plantsContainer.className = 'visual-plants';
+    gardenScene.appendChild(plantsContainer);
+  }
+  
+  const plantsContainer = document.getElementById('visual-plants');
+  if (!plantsContainer) return;
+  
+  GameState.garden.forEach((plant, idx) => {
+    if (!plant) return;
+    
+    const growthPercent = plant.stage / plant.growth;
+    const row = Math.floor(idx / GameState.gardenSize);
+    const col = idx % GameState.gardenSize;
+    const size = GameState.gardenSize;
+    
+    // Calculate position within the soil row
+    const colWidth = 100 / size;
+    const flowerSymbol = plant.stage >= plant.growth ? '✿' : '❀';
+    
+    const visualPlant = document.createElement('div');
+    visualPlant.className = 'visual-plant flower-visual';
+    visualPlant.dataset.color = plant.color;
+    visualPlant.style.left = `${col * colWidth + colWidth / 2}%`;
+    visualPlant.style.bottom = `${row * 60 + 15}px`;
+    visualPlant.style.fontSize = `${1.5 + (growthPercent * 1.5)}rem`;
+    visualPlant.innerHTML = flowerSymbol;
+    visualPlant.title = `${plant.common}\n(${plant.name})`;
+    
+    // Add botanical sketch effect
+    visualPlant.style.filter = 'sepia(0.2) contrast(1.1)';
+    visualPlant.style.textShadow = '1px 1px 2px rgba(90,74,58,0.3)';
+    
+    visualPlant.addEventListener('click', () => handlePlotClick(idx));
+    
+    plantsContainer.appendChild(visualPlant);
+  });
+}
+
+function renderSeedShop() {
+  const shop = document.getElementById('seed-shop');
+  shop.innerHTML = '';
+  
+  FLOWER_TYPES.forEach(flower => {
+    if (flower.locked && !GameState.upgrades.includes(`unlock-${flower.id}`)) return;
+    
+    const seedCard = document.createElement('div');
+    seedCard.className = 'seed-card';
+    if (GameState.selectedSeed === flower.id) seedCard.classList.add('selected');
+    
+    seedCard.innerHTML = `
+      <div class="flower-visual" data-color="${flower.color}">✿</div>
+      <div class="seed-name"><em>${flower.name}</em></div>
+      <div class="seed-common">${flower.common}</div>
+      <div class="seed-cost">${flower.cost}</div>
+      <div class="seed-info">Growth: ${flower.growth} | Water: ${flower.water}</div>
+    `;
+    
+    seedCard.addEventListener('click', () => selectSeed(flower.id));
+    shop.appendChild(seedCard);
+  });
+}
+
+function renderInventory() {
+  const inv = document.getElementById('inventory');
+  inv.innerHTML = '';
+  
+  if (GameState.inventory.length === 0) {
+    inv.innerHTML = '<p class="hint">No harvested flowers yet</p>';
+    return;
+  }
+  
+  const counts = {};
+  GameState.inventory.forEach(flower => {
+    counts[flower.id] = (counts[flower.id] || 0) + 1;
+  });
+  
+  Object.entries(counts).forEach(([id, count]) => {
+    const flower = FLOWER_TYPES.find(f => f.id === id);
+    const item = document.createElement('div');
+    item.className = 'inventory-item';
+    item.innerHTML = `
+      <div class="flower-visual" data-color="${flower.color}">✿</div>
+      <div class="inv-name-box">
+        <div class="inv-scientific"><em>${flower.name}</em></div>
+        <div class="inv-common">${flower.common}</div>
+      </div>
+      <span class="inv-count">×${count}</span>
+    `;
+    item.addEventListener('click', () => addToBouquet(flower));
+    inv.appendChild(item);
+  });
+}
+
+function renderMarketDemand() {
+  const demand = document.getElementById('market-demand');
+  demand.innerHTML = '';
+  
+  Object.entries(GameState.marketDemand).forEach(([id, multiplier]) => {
+    const flower = FLOWER_TYPES.find(f => f.id === id);
+    const item = document.createElement('div');
+    item.className = 'demand-item';
+    const percent = Math.round(multiplier * 100);
+    item.innerHTML = `
+      <div class="flower-visual" data-color="${flower.color}">✿</div>
+      <span class="demand-flower-name">${flower.common}:</span>
+      <span class="demand-value">${percent}%</span>
+    `;
+    if (multiplier > 1.2) item.classList.add('high-demand');
+    if (multiplier < 0.9) item.classList.add('low-demand');
+    demand.appendChild(item);
+  });
+}
+
+function renderBouquetsForSale() {
+  const container = document.getElementById('bouquets-for-sale');
+  container.innerHTML = '';
+  
+  if (GameState.bouquets.length === 0) {
+    container.innerHTML = '<p class="hint">No arrangements ready for market</p>';
+    return;
+  }
+  
+  GameState.bouquets.forEach((bouquet, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bouquet-card';
+    card.innerHTML = `
+      <div class="bouquet-flowers">${bouquet.flowers.map(f => f.emoji).join(' ')}</div>
+      <div class="bouquet-value">Value: ${bouquet.value}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderCurrentBouquet() {
+  const container = document.getElementById('current-bouquet');
+  container.innerHTML = '';
+  
+  if (GameState.currentBouquet.length === 0) {
+    container.innerHTML = '<p class="hint">Select flowers from inventory</p>';
+    document.getElementById('bouquet-value').textContent = '<script src="game.js"></script>';
+    return;
+  }
+  
+  GameState.currentBouquet.forEach((flower, idx) => {
+    const item = document.createElement('div');
+    item.className = 'bouquet-flower';
+    item.innerHTML = `<div class="flower-visual" data-color="${flower.color}" title="${flower.common}">\u273f</div>`;
+    item.addEventListener('click', () => removeFromBouquet(idx));
+    container.appendChild(item);
+  });
+  
+  const value = calculateBouquetValue(GameState.currentBouquet);
+  document.getElementById('bouquet-value').textContent = `${value}`;
+}
+
+// ========== GAME LOGIC ==========
+function selectSeed(seedId) {
+  GameState.selectedSeed = seedId;
+  renderSeedShop();
+  showNotification(`Selected ${FLOWER_TYPES.find(f => f.id === seedId).name} seed`);
+}
+
+function plantSeed(plotIdx) {
+  if (!GameState.selectedSeed) {
+    showNotification('Please select a seed first!', 'warning');
+    return;
+  }
+  
+  if (GameState.garden[plotIdx]) {
+    showNotification('Plot already occupied!', 'warning');
+    return;
+  }
+  
+  const flower = FLOWER_TYPES.find(f => f.id === GameState.selectedSeed);
+  
+  if (GameState.money < flower.cost) {
+    showNotification('Not enough money!', 'error');
+    return;
+  }
+  
+  GameState.money -= flower.cost;
+  GameState.garden[plotIdx] = {
+    ...flower,
+    stage: 0,
+    watered: 0
+  };
+  
+  showNotification(`Planted ${flower.name}!`, 'success');
+  render();
+}
+
+function handlePlotClick(plotIdx) {
+  const plant = GameState.garden[plotIdx];
+  if (!plant) return;
+  
+  if (plant.stage >= plant.growth) {
+    harvestPlant(plotIdx);
+  } else {
+    waterPlant(plotIdx);
+  }
+}
+
+function waterPlant(plotIdx) {
+  const plant = GameState.garden[plotIdx];
+  if (!plant) return;
+  
+  if (plant.watered >= plant.water) {
+    showNotification('Already well watered!', 'info');
+    return;
+  }
+  
+  plant.watered++;
+  showNotification(`Watered ${plant.name}`, 'success');
+  render();
+}
+
+function waterAll() {
+  const cost = 5 - GameState.toolLevel;
+  
+  if (GameState.money < cost) {
+    showNotification('Not enough money!', 'error');
+    return;
+  }
+  
+  GameState.money -= cost;
+  let count = 0;
+  
+  GameState.garden.forEach(plant => {
+    if (plant && plant.watered < plant.water) {
+      plant.watered++;
+      count++;
+    }
+  });
+  
+  showNotification(`Watered ${count} plants for ${cost}`, 'success');
+  render();
+}
+
+function advanceDay() {
+  GameState.garden.forEach(plant => {
+    if (plant && plant.watered >= plant.water && plant.stage < plant.growth) {
+      plant.stage++;
+      plant.watered = 0;
+    }
+  });
+  
+  GameState.day++;
+  showNotification('Day advanced. Plants have grown!', 'info');
+  render();
+}
+
+function harvestPlant(plotIdx) {
+  const plant = GameState.garden[plotIdx];
+  if (!plant || plant.stage < plant.growth) return;
+  
+  GameState.inventory.push({ ...plant });
+  GameState.garden[plotIdx] = null;
+  
+  showNotification(`Harvested ${plant.name}!`, 'success');
+  render();
+}
+
+function addToBouquet(flower) {
+  const idx = GameState.inventory.findIndex(f => f.id === flower.id);
+  if (idx === -1) return;
+  
+  GameState.currentBouquet.push(GameState.inventory.splice(idx, 1)[0]);
+  renderCurrentBouquet();
+  renderInventory();
+}
+
+function removeFromBouquet(idx) {
+  const flower = GameState.currentBouquet.splice(idx, 1)[0];
+  GameState.inventory.push(flower);
+  renderCurrentBouquet();
+  renderInventory();
+}
+
+function calculateBouquetValue(flowers) {
+  if (flowers.length === 0) return 0;
+  
+  let value = 0;
+  flowers.forEach(flower => {
+    const demand = GameState.marketDemand[flower.id] || 1;
+    value += Math.round(flower.baseValue * demand);
+  });
+  
+  // Bonus for variety
+  const uniqueTypes = new Set(flowers.map(f => f.id)).size;
+  if (uniqueTypes >= 3) value = Math.round(value * 1.3);
+  else if (uniqueTypes >= 2) value = Math.round(value * 1.15);
+  
+  return value;
+}
+
+function completeBouquet() {
+  if (GameState.currentBouquet.length === 0) {
+    showNotification('Add flowers to the arrangement first!', 'warning');
+    return;
+  }
+  
+  const value = calculateBouquetValue(GameState.currentBouquet);
+  GameState.bouquets.push({
+    flowers: [...GameState.currentBouquet],
+    value: value
+  });
+  
+  GameState.currentBouquet = [];
+  showNotification(`Arrangement completed! Worth ${value}`, 'success');
+  renderCurrentBouquet();
+  renderBouquetsForSale();
+}
+
+function generateMarketDemand() {
+  GameState.marketDemand = {};
+  FLOWER_TYPES.forEach(flower => {
+    GameState.marketDemand[flower.id] = 0.7 + Math.random() * 0.9; // 0.7 to 1.6
+  });
+}
+
+function endWeek() {
+  if (GameState.bouquets.length === 0) {
+    showNotification('No arrangements to sell!', 'warning');
+    return;
+  }
+  
+  let total = 0;
+  GameState.bouquets.forEach(bouquet => {
+    total += bouquet.value;
+  });
+  
+  GameState.money += total;
+  GameState.bouquets = [];
+  GameState.week++;
+  GameState.day = 1;
+  
+  generateMarketDemand();
+  showNotification(`Week concluded! Sold arrangements for ${total}`, 'success');
+  render();
+}
+
+// ========== UPGRADES ==========
+function openUpgrades() {
+  document.getElementById('upgrade-modal').classList.remove('hidden');
+  renderUpgrades();
+}
+
+function closeUpgrades() {
+  document.getElementById('upgrade-modal').classList.add('hidden');
+}
+
+function renderUpgrades() {
+  const list = document.getElementById('upgrades-list');
+  list.innerHTML = '';
+  
+  UPGRADES.forEach(upgrade => {
+    if (GameState.upgrades.includes(upgrade.id)) return;
+    
+    // Check if upgrade is available
+    if (upgrade.type === 'garden' && upgrade.value <= GameState.gardenSize) return;
+    
+    const card = document.createElement('div');
+    card.className = 'upgrade-card';
+    card.innerHTML = `
+      <div class="upgrade-name">${upgrade.name}</div>
+      <div class="upgrade-cost">Cost: ${upgrade.cost}</div>
+      <button class="action-btn upgrade-btn" ${GameState.money < upgrade.cost ? 'disabled' : ''}>Purchase</button>
+    `;
+    
+    card.querySelector('.upgrade-btn').addEventListener('click', () => purchaseUpgrade(upgrade));
+    list.appendChild(card);
+  });
+}
+
+function purchaseUpgrade(upgrade) {
+  if (GameState.money < upgrade.cost) return;
+  
+  GameState.money -= upgrade.cost;
+  GameState.upgrades.push(upgrade.id);
+  
+  if (upgrade.type === 'garden') {
+    const oldSize = GameState.gardenSize;
+    GameState.gardenSize = upgrade.value;
+    const newGarden = [];
+    for (let i = 0; i < upgrade.value * upgrade.value; i++) {
+      if (i < oldSize * oldSize) {
+        newGarden.push(GameState.garden[i]);
+      } else {
+        newGarden.push(null);
+      }
+    }
+    GameState.garden = newGarden;
+  } else if (upgrade.type === 'tool') {
+    GameState.toolLevel += upgrade.value;
+  }
+  
+  showNotification(`Purchased: ${upgrade.name}!`, 'success');
+  renderUpgrades();
+  render();
+}
+
+// ========== MODALS ==========
+function selectWrapper(wrapper) {
+  GameState.selectedWrapper = wrapper;
+  document.querySelectorAll('.wrapper-option').forEach(opt => {
+    opt.classList.toggle('selected', opt.dataset.wrapper === wrapper);
+  });
+  updateArrangementScores();
+}
+
+function selectRibbon(color) {
+  GameState.selectedRibbon = color;
+  document.querySelectorAll('.ribbon-option').forEach(opt => {
+    opt.classList.toggle('selected', opt.dataset.color === color);
+  });
+  updateArrangementScores();
+}
+
+function clearArrangement() {
+  GameState.arrangementFlowers.forEach(flower => {
+    GameState.inventory.push(flower.data);
+  });
+  GameState.arrangementFlowers = [];
+  GameState.selectedArrangementFlower = null;
+  renderShopFlowers();
+  renderArrangementCanvas();
+  updateArrangementScores();
+}
+
+function rotateSelectedFlower() {
+  if (GameState.selectedArrangementFlower !== null) {
+    const flower = GameState.arrangementFlowers[GameState.selectedArrangementFlower];
+    flower.rotation = (flower.rotation + 45) % 360;
+    renderArrangementCanvas();
+  }
+}
+
+function resizeSelectedFlower(factor) {
+  if (GameState.selectedArrangementFlower !== null) {
+    const flower = GameState.arrangementFlowers[GameState.selectedArrangementFlower];
+    flower.scale = Math.max(0.5, Math.min(2, flower.scale * factor));
+    renderArrangementCanvas();
+  }
+}
+
+function renderArrangementCanvas() {
+  const canvas = document.getElementById('arrangement-flowers');
+  if (!canvas) return;
+  canvas.innerHTML = '';
+  
+  GameState.arrangementFlowers.forEach((flower, idx) => {
+    const elem = document.createElement('div');
+    elem.className = 'canvas-flower';
+    if (GameState.selectedArrangementFlower === idx) elem.classList.add('selected');
+    elem.style.left = flower.x + 'px';
+    elem.style.top = flower.y + 'px';
+    elem.style.transform = `rotate(${flower.rotation}deg) scale(${flower.scale})`;
+    elem.innerHTML = `<div class="flower-visual" data-color="${flower.data.color}">\u273f</div>`;
+    elem.draggable = true;
+    
+    elem.addEventListener('click', () => {
+      GameState.selectedArrangementFlower = idx;
+      renderArrangementCanvas();
+    });
+    
+    elem.addEventListener('dragstart', (e) => {
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', idx);
+    });
+    
+    canvas.appendChild(elem);
+  });
+  
+  // Make canvas droppable
+  const canvasContainer = document.getElementById('arrangement-canvas');
+  if (!canvasContainer) return;
+  canvasContainer.ondragover = (e) => e.preventDefault();
+  canvasContainer.ondrop = (e) => {
+    e.preventDefault();
+    const idx = parseInt(e.dataTransfer.getData('text/html'));
+    const rect = canvasContainer.getBoundingClientRect();
+    GameState.arrangementFlowers[idx].x = e.clientX - rect.left - 20;
+    GameState.arrangementFlowers[idx].y = e.clientY - rect.top - 20;
+    renderArrangementCanvas();
+  };
+}
+
+function updateArrangementScores() {
+  const flowerCount = GameState.arrangementFlowers.length;
+  const uniqueTypes = new Set(GameState.arrangementFlowers.map(f => f.data.id)).size;
+  
+  // Aesthetic score (based on flower count and arrangement)
+  const aesthetic = Math.min(100, (flowerCount / 8) * 100);
+  const aestheticElem = document.getElementById('aesthetic-score');
+  if (aestheticElem) aestheticElem.style.width = aesthetic + '%';
+  
+  // Trend score (based on market demand)
+  let trendScore = 0;
+  GameState.arrangementFlowers.forEach(flower => {
+    const demand = GameState.marketDemand[flower.data.id] || 1;
+    trendScore += (demand - 0.7) / 0.9 * 100; // Normalize 0.7-1.6 to 0-100
+  });
+  const avgTrend = flowerCount > 0 ? trendScore / flowerCount : 0;
+  const trendElem = document.getElementById('trend-score');
+  if (trendElem) trendElem.style.width = Math.min(100, avgTrend) + '%';
+  
+  // Harmony score (based on variety)
+  const harmony = uniqueTypes >= 3 ? 100 : uniqueTypes >= 2 ? 70 : 40;
+  const harmonyElem = document.getElementById('harmony-score');
+  if (harmonyElem) harmonyElem.style.width = harmony + '%';
+  
+  // Calculate total value
+  let value = 0;
+  GameState.arrangementFlowers.forEach(flower => {
+    const demand = GameState.marketDemand[flower.data.id] || 1;
+    value += Math.round(flower.data.baseValue * demand);
+  });
+  
+  // Bonuses
+  const wrapperBonus = { classic: 1, elegant: 1.1, rustic: 1.05, luxury: 1.2 };
+  value = Math.round(value * wrapperBonus[GameState.selectedWrapper]);
+  if (uniqueTypes >= 3) value = Math.round(value * 1.3);
+  else if (uniqueTypes >= 2) value = Math.round(value * 1.15);
+  
+  const valueElem = document.getElementById('arrangement-value');
+  if (valueElem) valueElem.textContent = '
+</body>
+</html>
+ + value;
+  
+  // Update trend hint
+  const highDemand = Object.entries(GameState.marketDemand)
+    .filter(([_, v]) => v > 1.2)
+    .map(([k, _]) => FLOWER_TYPES.find(f => f.id === k)?.name)
+    .filter(Boolean);
+  
+  const trendHint = document.querySelector('.trend-clue');
+  if (trendHint && highDemand.length > 0) {
+    trendHint.textContent = `"The latest fashion dictates ${highDemand.join(', ')} are most desired this week."`;
+  }
+}
+
+function openFlowerShop() {
+  document.getElementById('flower-shop-modal').classList.remove('hidden');
+  GameState.arrangementFlowers = [];
+  renderShopFlowers();
+  renderArrangementCanvas();
+  updateArrangementScores();
+}
+
+function closeFlowerShop() {
+  document.getElementById('flower-shop-modal').classList.add('hidden');
+}
+
+function renderShopFlowers() {
+  const container = document.getElementById('shop-available-flowers');
+  container.innerHTML = '';
+  
+  if (GameState.inventory.length === 0) {
+    container.innerHTML = '<p class="hint">No flowers available</p>';
+    return;
+  }
+  
+  const counts = {};
+  GameState.inventory.forEach(flower => {
+    counts[flower.id] = (counts[flower.id] || 0) + 1;
+  });
+  
+  Object.entries(counts).forEach(([id, count]) => {
+    const flower = FLOWER_TYPES.find(f => f.id === id);
+    const item = document.createElement('div');
+    item.className = 'shop-flower-item';
+    item.innerHTML = `
+      <div class="flower-visual" data-color="${flower.color}">✿</div>
+      <span class="flower-label">${flower.common}</span>
+      <span class="count">${count}</span>
+    `;
+    item.addEventListener('click', () => addFlowerToCanvas(flower));
+    container.appendChild(item);
+  });
+}
+
+function addFlowerToCanvas(flowerType) {
+  const idx = GameState.inventory.findIndex(f => f.id === flowerType.id);
+  if (idx === -1) return;
+  
+  const flower = GameState.inventory.splice(idx, 1)[0];
+  GameState.arrangementFlowers.push({
+    data: flower,
+    x: Math.random() * 200 + 50,
+    y: Math.random() * 200 + 50,
+    rotation: Math.random() * 360,
+    scale: 1
+  });
+  
+  renderShopFlowers();
+  renderArrangementCanvas();
+  updateArrangementScores();
+}
+
+function createShopBouquet() {
+  if (GameState.arrangementFlowers.length === 0) {
+    showNotification('Add flowers to the arrangement first!', 'warning');
+    return;
+  }
+  
+  const flowers = GameState.arrangementFlowers.map(f => f.data);
+  let value = 0;
+  flowers.forEach(flower => {
+    const demand = GameState.marketDemand[flower.id] || 1;
+    value += Math.round(flower.baseValue * demand);
+  });
+  
+  // Apply bonuses
+  const uniqueTypes = new Set(flowers.map(f => f.id)).size;
+  const wrapperBonus = { classic: 1, elegant: 1.1, rustic: 1.05, luxury: 1.2 };
+  value = Math.round(value * wrapperBonus[GameState.selectedWrapper]);
+  if (uniqueTypes >= 3) value = Math.round(value * 1.3);
+  else if (uniqueTypes >= 2) value = Math.round(value * 1.15);
+  
+  GameState.bouquets.push({
+    flowers: flowers,
+    value: value,
+    wrapper: GameState.selectedWrapper,
+    ribbon: GameState.selectedRibbon
+  });
+  
+  GameState.arrangementFlowers = [];
+  showNotification(`Exquisite arrangement created! Worth ${value}`, 'success');
+  closeFlowerShop();
+  render();
+}
+
+function openHelp() {
+  document.getElementById('help-modal').classList.remove('hidden');
+}
+
+function closeHelp() {
+  document.getElementById('help-modal').classList.add('hidden');
+}
+
+function switchView(view) {
+  if (view === 'grid') {
+    document.getElementById('grid-view').classList.remove('hidden');
+    document.getElementById('visual-view').classList.add('hidden');
+    document.getElementById('grid-view-btn').classList.add('active');
+    document.getElementById('visual-view-btn').classList.remove('active');
+  } else {
+    document.getElementById('grid-view').classList.add('hidden');
+    document.getElementById('visual-view').classList.remove('hidden');
+    document.getElementById('grid-view-btn').classList.remove('active');
+    document.getElementById('visual-view-btn').classList.add('active');
+  }
+}
+
+// ========== NOTIFICATIONS ==========
+function showNotification(message, type = 'info') {
+  const container = document.getElementById('notifications');
+  const notif = document.createElement('div');
+  notif.className = `notification ${type}`;
+  notif.textContent = message;
+  container.appendChild(notif);
+  
+  setTimeout(() => {
+    notif.style.animation = 'slideOut 0.3s ease-in';
+    setTimeout(() => notif.remove(), 300);
+  }, 3000);
+}
+
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # 🌸 Victorian Botanical Garden — A Flower Growing Game
 
-A beautiful HTML5 botanical garden simulation featuring 48 rare flower species, procedural SVG illustrations, variable weather system, and Victorian-era aesthetics.
+A beautiful HTML5 botanical garden simulation featuring 58 rare flower species, procedural SVG illustrations, variable weather system, Victorian-era aesthetics, and elegant cursive typography.
 
 ## 🎮 How to Play
 
@@ -23,8 +23,8 @@ A beautiful HTML5 botanical garden simulation featuring 48 rare flower species, 
 - Seeds cost money — make sure you have enough!
 
 **Step 3: Water Your Plants**
-- **Click individual plants** in Plot View to water them one at a time
-- Or click **"Water All"** button to water everything (costs $5)
+- **Click individual plants** in Plot View to water them (**$1 per watering**)
+- Or click **"Water All ($5)"** button to water everything
 - Plants need watering equal to their **Water** requirement
 - Watch the water droplet indicators on each plot
 
@@ -42,7 +42,7 @@ A beautiful HTML5 botanical garden simulation featuring 48 rare flower species, 
 ### 💐 Creating Flower Arrangements
 
 **Opening the Flower Shop**
-- Click **"Flower Shop"** button in the header
+- Click **"🌺 Flower Shoppe"** button in the right panel or footer
 - This opens a full-page arrangement studio with a crystal vase
 
 **Arranging Flowers (Fusion 360 Style)**
@@ -76,28 +76,31 @@ A beautiful HTML5 botanical garden simulation featuring 48 rare flower species, 
 
 ### 🔓 Upgrades & Progression
 
-- Click **"Upgrades"** in the header
+- Click **"🔧 Improvements"** in the right panel or footer
 - Spend money to:
-  - **Unlock rare flower species** (48 total varieties)
-  - **Expand garden size** (up to 16×16 plots)
+  - **Unlock rare flower species** (58 total varieties!)
+  - **Expand garden size** (up to 24×24 plots!)
   - **Improve watering tools** (reduce Water All cost)
-  - **Unlock faster growth** (reduce days needed)
+  - **Automated Irrigation Systems** (auto-water your plants!)
+    - Basic: $500 - Waters all plants once daily
+    - Deluxe: $2,500 - Waters twice daily for faster growth
+    - Victorian Crystal Conservatory: $10,000 - Waters thrice daily with perfect conditions!
 
 ### 📖 Botanical Herbarium
 
 - Collect botanical illustrations by growing each species to maturity
-- Click **"Specimen Notebook"** to view your collection
+- Click **"📖 Specimen Notebook"** to view your collection
 - Each flower has scientific (*Latin*) and common names
 - Full-color procedural SVG illustrations
 
 ## 🎨 Game Features
 
 ### Visual Systems
-- **48 Procedural Flower Illustrations**: Unique SVG artwork for each species
+- **58 Procedural Flower Illustrations**: Unique SVG artwork for each species including ultra-rare exotics!
 - **Variable Weather System**: Dynamic sky with sun, clouds, rain, sunset, night cycle
 - **Realistic Garden View**: Layered soil, grass, swaying flowers, butterflies, birds
 - **Crystal Vase Design**: Victorian cut-glass styling with light refraction effects
-- **Victorian UI**: Pinyon Script and Crimson Text fonts, aged paper textures
+- **Victorian Typography**: Elegant Pinyon Script, Great Vibes, and Tangerine cursive fonts
 
 ### Flower Varieties
 

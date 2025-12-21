@@ -61,14 +61,34 @@ const FLOWER_TYPES = [
   { id: 'foxglove', name: 'Digitalis purpurea', common: 'Common Foxglove', cost: 29, growth: 5, water: 2, rarity: 2.1, baseValue: 26, color: 'purple', locked: true },
   { id: 'edelweiss', name: 'Leontopodium alpinum', common: 'Edelweiss', cost: 72, growth: 8, water: 3, rarity: 3.2, baseValue: 65, color: 'white', locked: true },
   { id: 'fire-lily', name: 'Gloriosa superba', common: 'Flame Lily', cost: 78, growth: 8, water: 4, rarity: 3.3, baseValue: 70, color: 'red', locked: true },
+  
+  // Tier 6 - Ultra Rare & Exotic (NEW)
+  { id: 'rothschild-orchid', name: 'Paphiopedilum rothschildianum', common: "Rothschild's Slipper Orchid", cost: 200, growth: 14, water: 5, rarity: 5, baseValue: 180, color: 'gold', locked: true },
+  { id: 'saffron-crocus', name: 'Crocus sativus', common: 'Saffron Crocus', cost: 165, growth: 12, water: 4, rarity: 4.5, baseValue: 150, color: 'purple', locked: true },
+  { id: 'vanilla-orchid', name: 'Vanilla planifolia', common: 'Vanilla Orchid', cost: 180, growth: 13, water: 5, rarity: 4.7, baseValue: 165, color: 'cream', locked: true },
+  { id: 'dragon-arum', name: 'Dracunculus vulgaris', common: 'Dragon Arum', cost: 145, growth: 11, water: 4, rarity: 4.2, baseValue: 135, color: 'purple', locked: true },
+  { id: 'moonflower', name: 'Ipomoea alba', common: 'Moonflower', cost: 95, growth: 9, water: 4, rarity: 3.6, baseValue: 88, color: 'white', locked: true },
+  { id: 'angel-trumpet', name: 'Brugmansia arborea', common: "Angel's Trumpet", cost: 155, growth: 11, water: 4, rarity: 4.3, baseValue: 140, color: 'white', locked: true },
+  { id: 'night-blooming-cereus', name: 'Selenicereus grandiflorus', common: 'Night-Blooming Cereus', cost: 175, growth: 12, water: 4, rarity: 4.6, baseValue: 160, color: 'white', locked: true },
+  { id: 'corpse-lily', name: 'Rafflesia arnoldii', common: 'Corpse Lily', cost: 250, growth: 15, water: 6, rarity: 5.5, baseValue: 230, color: 'red', locked: true },
+  { id: 'youtan-poluo', name: 'Youtan Poluo', common: 'Udumbara Flower', cost: 300, growth: 18, water: 6, rarity: 6, baseValue: 280, color: 'white', locked: true },
+  { id: 'black-orchid', name: 'Coelogyne pandurata', common: 'Black Orchid', cost: 220, growth: 14, water: 5, rarity: 5.2, baseValue: 200, color: 'black', locked: true },
 ];
 
 const UPGRADES = [
+  // Garden expansions
   { id: 'garden-6x6', name: 'Expand Garden to 6×6', cost: 150, type: 'garden', value: 6 },
   { id: 'garden-8x8', name: 'Expand Garden to 8×8', cost: 375, type: 'garden', value: 8 },
   { id: 'garden-10x10', name: 'Expand Garden to 10×10', cost: 750, type: 'garden', value: 10 },
   { id: 'garden-12x12', name: 'Expand Garden to 12×12', cost: 1500, type: 'garden', value: 12 },
   { id: 'garden-16x16', name: 'Expand Garden to 16×16', cost: 3750, type: 'garden', value: 16 },
+  { id: 'garden-20x20', name: 'Grand Estate Garden 20×20', cost: 7500, type: 'garden', value: 20 },
+  { id: 'garden-24x24', name: 'Royal Conservatory 24×24', cost: 15000, type: 'garden', value: 24 },
+  
+  // Self-watering plots (auto-water feature)
+  { id: 'auto-water-basic', name: 'Automated Irrigation System', cost: 500, type: 'auto-water', value: 1, description: 'Automatically waters all plants each day' },
+  { id: 'auto-water-advanced', name: 'Deluxe Self-Watering Greenhouse', cost: 2500, type: 'auto-water', value: 2, description: 'Auto-waters twice daily for faster growth' },
+  { id: 'auto-water-premium', name: 'Victorian Crystal Conservatory', cost: 10000, type: 'auto-water', value: 3, description: 'The ultimate garden: auto-waters thrice daily with perfect conditions' },
   
   // Tier 1 unlocks
   { id: 'unlock-pansy', name: 'Unlock Pansy Seeds', cost: 45, type: 'seed', value: 'pansy' },
@@ -123,8 +143,22 @@ const UPGRADES = [
   { id: 'unlock-corpse-flower', name: 'Unlock Corpse Flower Seeds', cost: 870, type: 'seed', value: 'corpse-flower' },
   { id: 'unlock-black-bat', name: 'Unlock Black Bat Flower Seeds', cost: 735, type: 'seed', value: 'black-bat' },
   
+  // Tier 6 unlocks - Ultra Rare & Exotic (NEW)
+  { id: 'unlock-rothschild-orchid', name: "Unlock Rothschild's Slipper Orchid Seeds", cost: 1200, type: 'seed', value: 'rothschild-orchid' },
+  { id: 'unlock-saffron-crocus', name: 'Unlock Saffron Crocus Seeds', cost: 1000, type: 'seed', value: 'saffron-crocus' },
+  { id: 'unlock-vanilla-orchid', name: 'Unlock Vanilla Orchid Seeds', cost: 1100, type: 'seed', value: 'vanilla-orchid' },
+  { id: 'unlock-dragon-arum', name: 'Unlock Dragon Arum Seeds', cost: 850, type: 'seed', value: 'dragon-arum' },
+  { id: 'unlock-moonflower', name: 'Unlock Moonflower Seeds', cost: 650, type: 'seed', value: 'moonflower' },
+  { id: 'unlock-angel-trumpet', name: "Unlock Angel's Trumpet Seeds", cost: 950, type: 'seed', value: 'angel-trumpet' },
+  { id: 'unlock-night-blooming-cereus', name: 'Unlock Night-Blooming Cereus Seeds', cost: 1050, type: 'seed', value: 'night-blooming-cereus' },
+  { id: 'unlock-corpse-lily', name: 'Unlock Corpse Lily Seeds', cost: 1500, type: 'seed', value: 'corpse-lily' },
+  { id: 'unlock-youtan-poluo', name: 'Unlock Udumbara Flower Seeds', cost: 2000, type: 'seed', value: 'youtan-poluo' },
+  { id: 'unlock-black-orchid', name: 'Unlock Black Orchid Seeds', cost: 1350, type: 'seed', value: 'black-orchid' },
+  
+  // Tool upgrades
   { id: 'better-tools', name: 'Superior Watering Tools', cost: 75, type: 'tool', value: 1 },
   { id: 'advanced-tools', name: 'Advanced Watering System', cost: 225, type: 'tool', value: 2 },
+  { id: 'master-tools', name: 'Master Gardener Tools', cost: 500, type: 'tool', value: 3 },
 ];
 
 // Game State
@@ -141,6 +175,7 @@ const GameState = {
   currentBouquet: [],
   upgrades: [],
   toolLevel: 0,
+  autoWaterLevel: 0, // 0 = none, 1 = basic (1x), 2 = advanced (2x), 3 = premium (3x)
   arrangementFlowers: [],
   selectedWrapper: 'classic',
   selectedRibbon: '#8b4557',
@@ -188,15 +223,33 @@ function attachEventListeners() {
   // Market
   document.getElementById('end-week-btn').addEventListener('click', endWeek);
   
-  // Modals and Pages
-  document.getElementById('flower-shop-btn').addEventListener('click', openFlowerShop);
+  // Right Panel Navigation Buttons
+  const panelFlowerShopBtn = document.getElementById('panel-flower-shop-btn');
+  const panelUpgradesBtn = document.getElementById('panel-upgrades-btn');
+  const panelSpecimenBtn = document.getElementById('panel-specimen-btn');
+  const panelHelpBtn = document.getElementById('panel-help-btn');
+  
+  if (panelFlowerShopBtn) panelFlowerShopBtn.addEventListener('click', openFlowerShop);
+  if (panelUpgradesBtn) panelUpgradesBtn.addEventListener('click', openUpgrades);
+  if (panelSpecimenBtn) panelSpecimenBtn.addEventListener('click', openSpecimenNotebook);
+  if (panelHelpBtn) panelHelpBtn.addEventListener('click', openHelp);
+  
+  // Footer Navigation Buttons
+  const footerFlowerShopBtn = document.getElementById('footer-flower-shop-btn');
+  const footerUpgradesBtn = document.getElementById('footer-upgrades-btn');
+  const footerSpecimenBtn = document.getElementById('footer-specimen-btn');
+  const footerHelpBtn = document.getElementById('footer-help-btn');
+  
+  if (footerFlowerShopBtn) footerFlowerShopBtn.addEventListener('click', openFlowerShop);
+  if (footerUpgradesBtn) footerUpgradesBtn.addEventListener('click', openUpgrades);
+  if (footerSpecimenBtn) footerSpecimenBtn.addEventListener('click', openSpecimenNotebook);
+  if (footerHelpBtn) footerHelpBtn.addEventListener('click', openHelp);
+  
+  // Modal close buttons
   document.getElementById('close-flower-shop').addEventListener('click', closeFlowerShop);
-  document.getElementById('upgrades-btn').addEventListener('click', openUpgrades);
   document.getElementById('close-upgrades').addEventListener('click', closeUpgrades);
-  document.getElementById('specimen-notebook-btn').addEventListener('click', openSpecimenNotebook);
   document.getElementById('close-specimen-notebook').addEventListener('click', closeSpecimenNotebook);
   document.getElementById('close-specimen-btn').addEventListener('click', closeSpecimenNotebook);
-  document.getElementById('help-btn').addEventListener('click', openHelp);
   document.getElementById('close-help').addEventListener('click', closeHelp);
   
   // Seed catalogue modal
@@ -566,12 +619,20 @@ function waterPlant(plotIdx) {
   if (!plant) return;
   
   if (plant.watered >= plant.water) {
-    showNotification('Already well watered!', 'info');
+    showNotification('This plant is already well watered today!', 'info');
     return;
   }
   
+  // Manual watering costs $1
+  const waterCost = 1;
+  if (GameState.money < waterCost) {
+    showNotification('Not enough money to water! You need $1.', 'error');
+    return;
+  }
+  
+  GameState.money -= waterCost;
   plant.watered++;
-  showNotification(`Watered ${plant.name}`, 'success');
+  showNotification(`💧 Watered ${plant.common} for $${waterCost}. Water level: ${plant.watered}/${plant.water}`, 'success');
   render();
 }
 
@@ -579,7 +640,7 @@ function waterAll() {
   const cost = 5 - GameState.toolLevel;
   
   if (GameState.money < cost) {
-    showNotification('Not enough money!', 'error');
+    showNotification('Not enough money to water all plants!', 'error');
     return;
   }
   
@@ -593,20 +654,60 @@ function waterAll() {
     }
   });
   
-  showNotification(`Watered ${count} plants for $${cost}`, 'success');
+  if (count > 0) {
+    showNotification(`💧 Watered ${count} plants for $${cost}. All thirsty plants refreshed!`, 'success');
+  } else {
+    showNotification('All plants are already well watered!', 'info');
+    GameState.money += cost; // Refund if nothing to water
+  }
   render();
 }
 
 function advanceDay() {
+  let grownCount = 0;
+  let needsWaterCount = 0;
+  let autoWateredCount = 0;
+  
+  // Auto-watering feature
+  if (GameState.autoWaterLevel > 0) {
+    GameState.garden.forEach(plant => {
+      if (plant && plant.watered < plant.water) {
+        const waterAmount = Math.min(GameState.autoWaterLevel, plant.water - plant.watered);
+        plant.watered += waterAmount;
+        autoWateredCount++;
+      }
+    });
+  }
+  
   GameState.garden.forEach(plant => {
-    if (plant && plant.watered >= plant.water && plant.stage < plant.growth) {
-      plant.stage++;
-      plant.watered = 0;
+    if (plant && plant.stage < plant.growth) {
+      if (plant.watered >= plant.water) {
+        plant.stage++;
+        plant.watered = 0;
+        grownCount++;
+      } else {
+        needsWaterCount++;
+      }
     }
   });
   
   GameState.day++;
-  showNotification('Day advanced. Plants have grown!', 'info');
+  
+  let message = `☀️ Day ${GameState.day} begins. `;
+  if (autoWateredCount > 0) {
+    message += `💧 Auto-watered ${autoWateredCount} plants. `;
+  }
+  if (grownCount > 0) {
+    message += `🌱 ${grownCount} plant${grownCount > 1 ? 's' : ''} grew! `;
+  }
+  if (needsWaterCount > 0) {
+    message += `${needsWaterCount} plant${needsWaterCount > 1 ? 's need' : ' needs'} more water.`;
+  }
+  if (grownCount === 0 && needsWaterCount === 0 && autoWateredCount === 0) {
+    message += 'Your garden awaits new seeds.';
+  }
+  
+  showNotification(message, 'info');
   render();
 }
 
@@ -625,10 +726,10 @@ function harvestPlant(plotIdx) {
   // Unlock botanical card if this is the first time harvesting this species
   if (!GameState.collectedCards.includes(plant.id)) {
     GameState.collectedCards.push(plant.id);
-    showNotification(`✨ New botanical illustration unlocked: ${plant.common}!`, 'success');
+    showNotification(`🌸 Harvested ${plant.common}! ✨ NEW botanical illustration unlocked for your Herbarium!`, 'success');
     renderHerbarium();
   } else {
-    showNotification(`Harvested ${plant.name}!`, 'success');
+    showNotification(`🌸 Harvested a beautiful ${plant.common}! Added to your collection.`, 'success');
   }
   
   render();
@@ -741,11 +842,14 @@ function renderUpgrades() {
     
     // Check if upgrade is available
     if (upgrade.type === 'garden' && upgrade.value <= GameState.gardenSize) return;
+    if (upgrade.type === 'auto-water' && upgrade.value <= GameState.autoWaterLevel) return;
     
     const card = document.createElement('div');
     card.className = 'upgrade-card';
+    const description = upgrade.description ? `<div class="upgrade-desc">${upgrade.description}</div>` : '';
     card.innerHTML = `
       <div class="upgrade-name">${upgrade.name}</div>
+      ${description}
       <div class="upgrade-cost">Cost: $${upgrade.cost}</div>
       <button class="action-btn upgrade-btn" ${GameState.money < upgrade.cost ? 'disabled' : ''}>Purchase</button>
     `;
@@ -775,9 +879,12 @@ function purchaseUpgrade(upgrade) {
     GameState.garden = newGarden;
   } else if (upgrade.type === 'tool') {
     GameState.toolLevel += upgrade.value;
+  } else if (upgrade.type === 'auto-water') {
+    GameState.autoWaterLevel = upgrade.value;
+    showNotification(`🌧️ ${upgrade.name} activated! Your plants will be automatically watered each day.`, 'success');
   }
   
-  showNotification(`Purchased: ${upgrade.name}!`, 'success');
+  showNotification(`✨ Purchased: ${upgrade.name}!`, 'success');
   renderUpgrades();
   render();
 }

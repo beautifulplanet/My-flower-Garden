@@ -1,0 +1,45 @@
+/* main.css - Victorian notebook theme */
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: #f5f0e6 url('../assets/paper-texture.png'); /* Placeholder texture */
+  color: #3a2c1a;
+}
+#notebook {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: rgba(255,255,255,0.95);
+  border: 2px solid #bfa77a;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(60,40,20,0.12);
+  padding: 2rem;
+}
+header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+nav button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #bfa77a;
+  background: #f8f5e9;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+nav button:hover {
+  background: #e6dcc3;
+}
+#main-content {
+  min-height: 400px;
+}

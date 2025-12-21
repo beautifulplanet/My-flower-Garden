@@ -88,11 +88,48 @@
                     <div class="garden-actions">
                         <button id="water-all-btn" class="action-btn">Water All ($5)</button>
                         <button id="next-day-btn" class="action-btn primary">Advance Day</button>
-            <div class="page-header">
-                <button id="close-flower-shop" class="return-button">← Return to Garden</button>
-                <h1>The Arrangement Studio</h1>
+                    </div>
+                </section>
+
+                <!-- Center Panel: Inventory & Market -->
+                <section class="panel shop-panel">
+                    <h2>Harvested Specimens</h2>
+                    <div id="inventory" class="inventory"></div>
+                    
+                    <h2>Botanical Herbarium</h2>
+                    <p class="hint">Illustrations collected from cultivated specimens</p>
+                    <div id="herbarium" class="herbarium"></div>
+
+                    <h2>Weekly Market</h2>
+                    <div class="market-section">
+                        <div class="market-demand">
+                            <h3>Current Demand:</h3>
+                            <div id="market-demand" class="market-demand-list"></div>
+                        </div>
+                        <button id="end-week-btn" class="action-btn warning">End Week & Sell All</button>
+                    </div>
+                </section>
+
+                <!-- Right Panel: Navigation -->
+                <section class="panel controls-panel">
+                    <button id="flower-shop-btn" class="action-btn primary">Flower Shop</button>
+                    <button id="upgrades-btn" class="action-btn">Upgrades</button>
+                    <button id="specimen-notebook-btn" class="action-btn">Specimen Notebook</button>
+                    <button id="help-btn" class="action-btn">Help</button>
+                </section>
             </div>
-            <div class="flower-shop-page-content">
+        </main>
+
+        <div id="notifications" class="notification-container"></div>
+    </div>
+
+    <!-- Flower Shop Page (full page view) -->
+    <div id="flower-shop-page" class="page-view hidden">
+        <div class="page-header">
+            <button id="close-flower-shop" class="return-button">← Return to Garden</button>
+            <h1>The Arrangement Studio</h1>
+        </div>
+        <div class="flower-shop-page-content">
                 <div class="shop-main-layout">
                     <!-- Row 1: Flowers + Canvas -->
                     <div class="shop-section flowers-section">
